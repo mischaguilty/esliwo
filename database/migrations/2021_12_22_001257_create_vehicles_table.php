@@ -20,7 +20,7 @@ class CreateVehiclesTable extends Migration
             $table->unsignedInteger('year_start')->index();
             $table->unsignedInteger('year_end')->index()->nullable();
             $table->longText('bodytypes')->nullable();
-            $table->longText('full_name')->nullable()->index();
+            $table->longText('full_name')->nullable();
             $table->timestamps();
         });
     }

@@ -44,7 +44,7 @@ class Index extends Component
 
     public function route(): \Illuminate\Routing\Route|array
     {
-        return Route::get('/stock-products/{stock}', static::class)
+        return Route::get('/stock/{stock}/products', static::class)
             ->name('stock-products')
             ->middleware('auth');
     }

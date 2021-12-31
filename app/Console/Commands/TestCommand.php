@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Actions\ElsieCodesQuantitiesAction;
-use App\Actions\ElsiePriceDownloadAction;
 use App\Actions\ElsieShowTrashAction;
 use App\Actions\ElsieTrashAction;
 use App\Actions\ElsieVehicleProductsPricesAction;

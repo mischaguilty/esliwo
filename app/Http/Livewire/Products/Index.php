@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Products;
 
+use App\Http\Traits\WithCodeSearch;
+use App\Http\Traits\WithGlassAccessoryFilter;
 use App\Http\Traits\WithPlacement;
 use App\Models\Product;
 use Illuminate\Contracts\Foundation\Application;
@@ -16,6 +18,8 @@ class Index extends Component
 {
     use WithPagination;
     use WithPlacement;
+    use WithCodeSearch;
+    use WithGlassAccessoryFilter;
 
     public string $search = '';
     public string $sort = 'Name';
@@ -35,23 +39,20 @@ class Index extends Component
     public function render(): Factory|View|Application
     {
         return view('products.index', [
-            'products' => $this->queryPlacement()->paginate(),
+            'products' => $this->query()->paginate(),
         ]);
     }
 
     public function query(): Builder
     {
-        return Product::query()
-            ->glasses()
-            ->when($this->search, function (Builder $builder) {
-                return $builder->where(function (Builder $builder) {
-                    $builder->orWhere('name', 'like', '%' . $this->search . '%')
-                        ->orWhere('elsie_code', 'like', $this->search . "%");
-                });
-            })
-            ->whereHas('stock_products.prices')
-            ->whereHas('stock_products.quantities')
-            ->orderBy('elsie_code');
+        return $this->queryCodeSearch(
+            $this->queryGaFilter(
+                $this->queryPlacement(Product::query()->glasses()
+//                    ->whereHas('stock_products.prices')
+//                    ->whereHas('stock_products.quantities')
+                )
+            )
+        )->orderBy('elsie_code');
 
 //
 //        switch ($this->sort) {

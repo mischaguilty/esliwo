@@ -15,13 +15,15 @@ class Show extends Component
 
     public function route(): \Illuminate\Routing\Route
     {
-        return Route::get('/stocks/{stock}/show', static::class)
+        return Route::get('/stocks/{stock}', static::class)
             ->name('stocks.show')
             ->middleware('auth');
     }
 
     public function render(): Factory|View|Application
     {
-        return view('stocks.show');
+        return view('stocks.show')->with([
+//            'products' => $this->query(),
+        ]);
     }
 }

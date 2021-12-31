@@ -19,12 +19,10 @@ trait WithPlacement
         $this->emit('$refresh');
     }
 
-    public function queryPlacement()
+    public function queryPlacement(Builder $builder)
     {
-        return $this->query()->when(in_array($this->selectedPlacement, $this->placements), function (Builder $builder) {
-            $builder->when(!empty($this->selectedPlacement), function (Builder $builder) {
-                $builder->whereRaw('`elsie_code` REGEXP ' . '"^[[:alnum:]]{4}' . $this->selectedPlacement . '[[:alnum:]]*-?[[:alnum:]]*$"');
-            });
+        return $builder->when(!empty($this->selectedPlacement), function (Builder $builder) {
+            $builder->whereRaw('`elsie_code` REGEXP ' . '"^[[:alnum:]]{4}' . $this->selectedPlacement . '[[:alnum:]]*-?[[:alnum:]]*$"');
         });
     }
 }

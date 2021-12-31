@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Manufacturers;
 
+use App\Http\Traits\WithCodeSearch;
+use App\Http\Traits\WithGlassAccessoryFilter;
 use App\Http\Traits\WithPlacement;
 use App\Models\Manufacturer;
 use Illuminate\Contracts\Foundation\Application;
@@ -16,8 +18,9 @@ class Show extends Component
 {
     use WithPagination;
     use WithPlacement;
+    use WithGlassAccessoryFilter;
+    use WithCodeSearch;
 
-    public string $search = '';
     protected $listeners = ['$refresh'];
 
     public Manufacturer $manufacturer;
@@ -32,16 +35,18 @@ class Show extends Component
     public function render(): Factory|View|Application
     {
         return view('manufacturers.show')->with([
-            'products' => $this->queryPlacement()->paginate(),
+            'products' => $this->query()->paginate(),
         ]);
     }
 
     public function query(): Builder
     {
-        return $this->manufacturer->products()->getQuery()
-            ->when(!empty($this->search), function (Builder $builder) {
-                $builder->orWhere('elsie_code', 'like', $this->search . '%')
-                    ->orWhere('name', 'like', "%" . $this->search . "%");
-            });
+        return $this->queryCodeSearch(
+            $this->queryPlacement(
+                $this->queryGaFilter(
+                    $this->manufacturer->products()->getQuery()
+                )
+            )
+        );
     }
 }

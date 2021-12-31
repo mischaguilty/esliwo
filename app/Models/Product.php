@@ -34,16 +34,12 @@ class Product extends Model implements HasMedia
 
     public function scopeGlasses(Builder $builder): Builder
     {
-        return $builder
-            ->whereRaw('`elsie_code` NOT REGEXP ' . '"^[[:alnum:]]{5}S[[:alnum:]]*-?[[:alnum:]]*$"')
-            ->whereRaw('`elsie_code` NOT REGEXP ' . '"^[[:alnum:]]{5}K[[:alnum:]]*-?[[:alnum:]]*$"');
+        return $builder->whereRaw('`elsie_code` NOT REGEXP "^[[:alnum:]]{5}[S,K,X]{1}[[:alnum:]]*-?[[:alnum:]]*$"');
     }
 
     public function scopeAccessories(Builder $builder): Builder
     {
-        return $builder
-            ->whereRaw('`elsie_code` REGEXP ' . '"^[[:alnum:]]{5}S[[:alnum:]]*-?[[:alnum:]]*$"')
-            ->whereRaw('`elsie_code` REGEXP ' . '"^[[:alnum:]]{5}K[[:alnum:]]*-?[[:alnum:]]*$"');
+        return $builder->whereRaw('`elsie_code` REGEXP "^[[:alnum:]]{5}[S,K,X]{1}[[:alnum:]]*-?[[:alnum:]]*$"');
     }
 
     public static function suggestedManufacturer(string $suffix): ?Manufacturer

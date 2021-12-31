@@ -39,12 +39,15 @@ class Index extends Component
 
     public function query(): Builder
     {
-        $query = Manufacturer::query()->when($this->search, function (Builder $query) {
-            return $query->where(function (Builder $query) {
-                $query->orWhere('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('code_suffix', 'like', $this->search . '%');
-            });
-        });
+        $query = Manufacturer::query()
+            ->withCount('products')
+            ->when($this->search, function (Builder $query) {
+                return $query->where(function (Builder $query) {
+                    $query->orWhere('name', 'like', '%' . $this->search . '%')
+                        ->orWhere('code_suffix', 'like', $this->search . '%');
+                });
+            })
+            ->orderByDesc('products_count');
 
         return $query->orderBy('name');
     }
