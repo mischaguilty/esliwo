@@ -1,0 +1,7 @@
+$font-size-base: 0.9rem;
+$enable-negative-margins: true;
+$container-max-width: 960px;
+
+.container {
+    max-width: $container-max-width !important;
+}
