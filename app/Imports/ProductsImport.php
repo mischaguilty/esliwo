@@ -20,7 +20,6 @@ class ProductsImport implements WithHeadingRow, WithUpserts, WithStartRow, Skips
 {
     use SkipsFailures, SkipsErrors, Importable;
 
-
     public function headingRow(): int
     {
         return 7;
@@ -46,7 +45,7 @@ class ProductsImport implements WithHeadingRow, WithUpserts, WithStartRow, Skips
             if (str_starts_with($row['kod_elsi'], '3985')) {
                 $row['kod_elsi'] = str_replace('3985', '39B5', $row['kod_elsi']);
             }
-            
+
             $parsed = Product::parseCode($row['kod_elsi']);
             return new Product([
                 'elsie_code' => $row['kod_elsi'],

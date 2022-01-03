@@ -18,6 +18,7 @@ class CreateStockProductQuantitiesTable extends Migration
             $table->id();
             $table->foreignIdFor(StockProduct::class, 'stock_product_id')->constrained('stock_products')->cascadeOnDelete();
             $table->unsignedBigInteger('quantity')->default(0);
+            $table->string('units')->default('pcs');
             $table->timestamps();
         });
     }

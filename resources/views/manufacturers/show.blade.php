@@ -1,6 +1,29 @@
 @section('title', $manufacturer->name.' '.__('products'))
 
 <div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ route('home') }}" class="text-decoration-none text-secondary">
+                    <i class="fa fa-home"></i>
+                </a>
+            </li>
+
+            <li class="breadcrumb-item">
+                <a href="{{ route('manufacturers') }}" class="text-decoration-none text-secondary">
+                    {{ __('Manufacturers') }}
+                </a>
+            </li>
+
+            <li class="breadcrumb-item active">
+                <a href="{{ route('manufacturers.show', ['manufacturer' => $manufacturer]) }}"
+                   class="text-decoration-none text-black">
+                    {{ $manufacturer->name }}
+                </a>
+            </li>
+        </ol>
+    </nav>
+
     <h1>@yield('title')</h1>
     <div class="flex-wrap flex-sm-nowrap d-flex justify-content-between mb-0 mb-sm-3">
         <div class="mb-3 mb-sm-0 col flex-sm-grow-1 flex-fill">
@@ -44,8 +67,11 @@
     <div class="list-group mb-3">
         @forelse($products as $product)
             <livewire:products.item :product="$product"
-                                    wire:key="{{ implode('_', ['product', $loop->index, $product->id]) }}"/>        @empty
+                                    wire:key="{{ implode('_', ['product', $loop->index, $product->id]) }}"
+            />
+        @empty
         @endforelse
     </div>
+
     <x-ui::pagination :links="$products"/>
 </div>

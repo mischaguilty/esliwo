@@ -22,10 +22,6 @@ class Index extends Component
     use WithGlassAccessoryFilter;
 
     public string $search = '';
-    public string $sort = 'Name';
-    public array $sorts = ['Name', 'Newest', 'Oldest'];
-    public string $filter = 'All';
-    public array $filters = ['All', 'Custom'];
 
     protected $listeners = ['$refresh'];
 
@@ -47,24 +43,11 @@ class Index extends Component
     {
         return $this->queryCodeSearch(
             $this->queryGaFilter(
-                $this->queryPlacement(Product::query()->glasses()
-//                    ->whereHas('stock_products.prices')
-//                    ->whereHas('stock_products.quantities')
+                $this->queryPlacement(
+                    Product::query()
                 )
             )
-        )->orderBy('elsie_code');
-
-//
-//        switch ($this->sort) {
-//            case 'Name': $query->orderBy('name'); break;
-//            case 'Newest': $query->orderByDesc('created_at'); break;
-//            case 'Oldest': $query->orderBy('created_at'); break;
-//        }
-//
-//        switch ($this->filter) {
-//            case 'All': break;
-//            case 'Custom': $query->whereNull('created_at'); break;
-//        }
+        );
     }
 
     public function updatedSearch()

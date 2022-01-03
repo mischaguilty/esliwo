@@ -207,5 +207,11 @@
   "Placement F": "Плоское",
   "Not found at stocks": "На складах не найден",
   "Glasses": "Стёкла",
-  "Accessories": "Аксессуары"
+  "Accessories": "Аксессуары",
+  "Quantities": "Данные об остатках",
+  "Price Dynamic": "Динамика цен",
+  "Last known price": "Последняя известная цена",
+  "Last known quantity": "Последние известные остатки",
+  "pcs": "шт",
+  "For fresh data click ->": "Для получения данных нажмите ->"
 }

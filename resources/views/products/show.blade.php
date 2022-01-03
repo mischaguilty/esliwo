@@ -1,6 +1,27 @@
 @section('title', $product->elsie_code)
 
 <div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ route('home') }}" class="text-decoration-none text-secondary">
+                    <i class="fa fa-home"></i>
+                </a>
+            </li>
+
+            <li class="breadcrumb-item">
+                <a href="{{ route('products') }}" class="text-decoration-none text-secondary">
+                    {{ __('Products') }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="{{ route('products.show', ['product' => $product]) }}" class="text-decoration-none text-black">
+                    {{ $product->elsie_code }}
+                </a>
+            </li>
+        </ol>
+    </nav>
+
     <h1>@yield('title')</h1>
     <p>{{ $product->name }}</p>
 
@@ -39,8 +60,8 @@
             </a>
         @endif
     </div>
-    @forelse(\App\Models\Stock::query()->get() as $stock)
-        @livewire('stock-products.item', ['stock' => $stock, 'product' => $product])
+    @forelse($product->stocks()->get() as $stock)
+        <livewire:stock-products.item :stock="$stock" :product="$product"/>
     @empty
     @endforelse
 </div>

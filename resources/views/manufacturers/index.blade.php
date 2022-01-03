@@ -1,6 +1,22 @@
 @section('title', __('Manufacturers'))
 
 <div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ route('home') }}" class="text-decoration-none text-secondary">
+                    <i class="fa fa-home"></i>
+                </a>
+            </li>
+
+            <li class="breadcrumb-item active">
+                <a href="{{ route('manufacturers') }}" class="text-decoration-none text-black">
+                    {{ __('Manufacturers') }}
+                </a>
+            </li>
+        </ol>
+    </nav>
+
     <h1>@yield('title')</h1>
 
     <div class="row justify-content-between">

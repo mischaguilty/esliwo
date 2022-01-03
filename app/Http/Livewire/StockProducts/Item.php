@@ -12,43 +12,37 @@ use Livewire\Component;
 
 class Item extends Component
 {
-    public StockProduct $stockProduct;
-    public ?Stock $stock;
-    public ?Product $product;
+    public Stock $stock;
+    public Product $product;
+    public ?StockProduct $stockProduct;
 
-    public function mount(StockProduct $stockProduct = null, Stock $stock = null, Product $product = null)
+    public function mount(Stock $stock, Product $product, StockProduct $stockProduct = null)
     {
-        if (!$stockProduct->exists) {
-            $stock = optional($stock->exists ? $stock->loadMissing('products') : null, function (Stock $stock) {
-                    return $stock;
-                }) ?? new Stock;
-            if (!$stock->exists) {
-                return;
-            }
+        $this->stock = $stock;
+        $this->product = $product;
 
-            $product = optional($product->exists ? $product->loadMissing('stocks') : null, function (Product $product) {
-                    return $product;
-                }) ?? new Product;
-
-            if (!$product->exists) {
-                return;
-            }
-
-            $stockProduct = optional(StockProduct::query()->firstOrCreate([
-                        'stock_id' => $stock->id,
-                        'product_id' => $product->id,
-                    ]) ?? null, function (StockProduct $stockProduct) {
-                    return $stockProduct->loadMissing([
-                        'prices', 'quantities'
-                    ]);
-                }) ?? new StockProduct;
-        }
-
-        $this->stockProduct = $stockProduct;
+        $this->stockProduct = optional($stockProduct ?? StockProduct::query()->firstOrCreate([
+                'stock_id' => $this->stock->id,
+                'product_id' => $this->product->id,
+            ]), function (StockProduct $stockProduct) {
+            return $stockProduct;
+        });
     }
+
+    protected $listeners = [
+        '$refresh',
+    ];
 
     public function render(): Factory|View|Application
     {
-        return view('stock-products.item');
+        return view('stock-products.item')->with([
+
+        ]);
+    }
+
+    public function getStockProductInfo()
+    {
+
+        $this->emit('$refresh');
     }
 }

@@ -1,18 +1,13 @@
 <div>
-    @isset($stockProduct)
-        <a href="{{ route('stock-products.show', ['stockProduct' => $stockProduct]) }}" class="text-decoration-none">
-            @endisset
-            <div class="d-flex align-items-center">
-                {{--            <div class="flex-shrink-0">--}}
-                {{--                <i class="fa fa-2x {{ $presented ? 'fa-store' : 'fa-store-slash' }} {{ $presented ? 'text-success' : 'text-secondary' }}"></i>--}}
-                {{--            </div>--}}
-                <div class="flex-grow-1 ms-3">
-                    <div class="text-dark">
-                        {{ $stock->name }}
-                    </div>
-                </div>
+    <a href="{{ route('stock-products.show', ['stockProduct' => $this->stockProduct]) }}" class="text-decoration-none">
+        <div class="flex-shrink-1">
+            @php($class = $stockProduct ? ($stockProduct->prices()->count() ? 'text-success' : 'text-secondary') : 'text-secondary')
+            <i class="fa fa-home {{ $class }}"></i>
+        </div>
+        <div class="flex-grow-1 ms-3">
+            <div class="text-dark">
+                {{ $stock->name }}
             </div>
-        @isset($stockProduct)
-            {{--    </a>--}}
-        @endisset
+        </div>
+    </a>
 </div>

@@ -24,7 +24,7 @@ class Show extends Component
     public function render(): Factory|View|Application
     {
         return view('products.show')->with([
-//            'stocks' => $this->stocksQuery()->get(),
+
         ]);
     }
 
