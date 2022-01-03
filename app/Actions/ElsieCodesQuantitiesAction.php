@@ -33,8 +33,10 @@ class ElsieCodesQuantitiesAction
                     'stock' => $item[7] ?? null,
                     'elsie_code' => $item[0] ?? null,
                     'stock_code' => $item[1] ?? null,
-                    'width' => $item[8] ?? null,
-                    'height' => $item[9] ?? null,
+                    'size' => implode('x', [
+                        $item[8] ?? '',
+                        $item[9] ?? '',
+                    ]),
                     'price' => $item[3] ?? null,
                     'quantity' => $item[5] ?? ($item[6] ?? 0),
                 ]);
@@ -47,8 +49,6 @@ class ElsieCodesQuantitiesAction
 
                 $product = optional(Product::query()->firstWhere([
                         'elsie_code' => $pData['elsie_code'],
-                        'width' => $pData['width'],
-                        'height' => $pData['height'],
                     ]) ?? null, function (Product $product) {
                     return $product;
                 });
@@ -58,11 +58,14 @@ class ElsieCodesQuantitiesAction
                             'stock_id' => $stock->id,
                             'product_id' => $product->id,
                         ]) ?? null, function (StockProduct $stockProduct) use ($pData) {
-                        dump($pData['elsie_code'], $pData['stock']);
 
-                        return $stockProduct->quantities()->create([
+                        $stockProduct->prices()->create([
+                            'price' => $pData['price'],
+                        ])->touchOwners();
+
+                        $stockProduct->quantities()->create([
                             'quantity' => $pData['quantity'],
-                        ]);
+                        ])->touchOwners();
                     });
                 }
             }

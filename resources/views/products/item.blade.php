@@ -40,23 +40,23 @@
                         </li>
                     @endif
                     <li>
-                        @forelse($product->stock_products()->whereHas('prices')->whereHas('quantities')->get() as $stockProduct)
-                            <div>
-                                <strong class="text-primary">
-                                    {{ $stockProduct->stock->name }} - {{ $stockProduct->actual_quantity->quantity }}
-                                </strong>
-                                @if($price = $stockProduct->actual_price)
-                                    <strong class="text-success">
-                                        {{ $price->price }} {{ $price->currency }}
-                                    </strong>
-                                    <small class="text-secondary">
-                                        {{ now()->sub($price->created_at)->diffForHumans() }}
-                                    </small>
-                                @endif
-                            </div>
-                        @empty
-                            <small class="text-danger">{{ __('Not found at stocks') }}</small>
-                        @endforelse
+                        {{--                        @forelse($producwhereCount('prices')->whereHas('quantities')->get() as $stockProduct)--}}
+                        {{--                            <div>--}}
+                        {{--                                <strong class="text-primary">--}}
+                        {{--                                    {{ $stockProduct->stock->name }} - {{ $stockProduct->actual_quantity->quantity }}--}}
+                        {{--                                </strong>--}}
+                        {{--                                @if($price = $stockProduct->actual_price)--}}
+                        {{--                                    <strong class="text-success">--}}
+                        {{--                                        {{ $price->price }} {{ $price->currency }}--}}
+                        {{--                                    </strong>--}}
+                        {{--                                    <small class="text-secondary">--}}
+                        {{--                                        {{ now()->sub($price->created_at)->diffForHumans() }}--}}
+                        {{--                                    </small>--}}
+                        {{--                                @endif--}}
+                        {{--                            </div>--}}
+                        {{--                        @empty--}}
+                        {{--                            <small class="text-danger">{{ __('Not found at stocks') }}</small>--}}
+                        {{--                        @endforelse--}}
                     </li>
                 </ul>
             </div>

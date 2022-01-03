@@ -10,6 +10,7 @@
   "require": {
     "php": "^8.0",
     "ext-curl": "*",
+    "asantibanez/livewire-charts": "^2.3",
     "bastinald/ui": "^2.2.2",
     "fruitcake/laravel-cors": "^2.0.4",
     "guzzlehttp/guzzle": "^7.4.1",

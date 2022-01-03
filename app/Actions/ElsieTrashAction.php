@@ -23,7 +23,7 @@ class ElsieTrashAction extends CookieAction
     protected function getPostFields(array $codes, bool $filled, array $stocks): string
     {
         return implode('&', [
-            'shop=0',
+            'shop=1',
             collect($codes)->map(function (string $code) use ($filled) {
                 return implode('=', [
                     $code,

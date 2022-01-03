@@ -9,12 +9,9 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Route;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class Index extends Component
 {
-    use WithPagination;
-
     public string $search = '';
     public string $sort = 'Name';
     public array $sorts = ['Name', 'Newest', 'Oldest'];
@@ -33,28 +30,22 @@ class Index extends Component
     public function render(): Factory|View|Application
     {
         return view('stocks.index', [
-            'stocks' => $this->query()->paginate(),
+            'stocks' => $this->query()->get(),
         ]);
     }
 
     public function query(): Builder
     {
-        $query = Stock::query()->when($this->search, function (Builder $query) {
+        $query = Stock::query()->withCount('products')->when($this->search, function (Builder $query) {
             return $query->orWhere('name', 'like', '%' . $this->search . '%');
         })->whereNotNull('shop_id');
 
-//        switch ($this->sort) {
-//            case 'Name': $query->orderBy('name'); break;
-//            case 'Newest': $query->orderByDesc('created_at'); break;
-//            case 'Oldest': $query->orderBy('created_at'); break;
-//        }
-//
-//        switch ($this->filter) {
-//            case 'All': break;
-//            case 'Custom': $query->whereNull('created_at'); break;
-//        }
-
-        return $query->orderBy('shop_id');
+        $query = $query->when($query->count() === 0, function (Builder $builder) {
+            return $builder->whereHas('products', function (Builder $builder) {
+                return $builder->where('elsie_code', 'like', $this->search . '%');
+            });
+        });
+        return $query->orderByDesc('products_count');
     }
 
     public function delete(Stock $stock)

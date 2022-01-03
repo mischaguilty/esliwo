@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 
@@ -22,6 +23,13 @@ class Show extends Component
 
     public function render(): Factory|View|Application
     {
-        return view('products.show');
+        return view('products.show')->with([
+//            'stocks' => $this->stocksQuery()->get(),
+        ]);
+    }
+
+    public function stocksQuery(): Builder
+    {
+        return $this->product->stocks()->getQuery();
     }
 }

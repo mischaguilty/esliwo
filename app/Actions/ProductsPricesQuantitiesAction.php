@@ -29,8 +29,6 @@ class ProductsPricesQuantitiesAction
         ElsieTrashAction::make()->handle($codes, true);
         $trash = ElsieShowTrashAction::make()->handle();
         ElsieTrashAction::make()->handle($codes);
-
-        dd($trash);
-
+        return !empty($trash);
     }
 }

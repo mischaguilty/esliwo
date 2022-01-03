@@ -39,7 +39,7 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <x-ui::icon name="user-circle"/> {{ Auth::user()->name }}
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end">
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
                             <x-ui::dropdown-item :label="__('Update Profile')"
                                                  click="$emit('showModal', 'auth.profile-update')"/>
 
