@@ -2,10 +2,8 @@
 
 namespace App\Imports;
 
-use App\Models\Code;
 use App\Models\Vehicle;
 use Illuminate\Database\Eloquent\Model;
-use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
@@ -18,7 +16,6 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 
 class VehiclesImport implements ToModel, WithHeadingRow, WithUpserts, SkipsEmptyRows, WithValidation, SkipsOnFailure, WithStartRow
 {
-    use Importable;
     use SkipsErrors;
     use SkipsFailures;
 

@@ -99,7 +99,7 @@
 
     @if(!is_null($pricesChartModel))
         <div class="shadow-sm mb-5" style="height: 10rem;">
-            <h4 class="m-0 p-0">{{ __('Prices') }}</h4>
+            <h4 class="m-0 p-0">{{ __('Price Dynamic') }}</h4>
             <livewire:livewire-area-chart
                     key="{{ $pricesChartModel->reactiveKey() }}"
                     :area-chart-model="$pricesChartModel"

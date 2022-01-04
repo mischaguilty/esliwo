@@ -14,7 +14,9 @@ class DatabaseSeeder extends Seeder
         $this->call(StocksSeeder::class);
 
         optional(ElsiePriceDownloadAction::make()->handle() ?? null, function (string $filename) {
-            return Excel::import(new PriceImport, $filename);
+            $this->command->getOutput()->title('Starting price import');
+            Excel::import(new PriceImport, $filename);
+            $this->command->getOutput()->info('Price import completed');
         });
     }
 }

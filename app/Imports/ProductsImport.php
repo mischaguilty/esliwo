@@ -5,7 +5,6 @@ namespace App\Imports;
 use App\Models\Manufacturer;
 use App\Models\Product;
 use App\Models\Vehicle;
-use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
@@ -18,7 +17,7 @@ use Maatwebsite\Excel\Concerns\WithUpserts;
 
 class ProductsImport implements WithHeadingRow, WithUpserts, WithStartRow, SkipsOnFailure, SkipsOnError, SkipsEmptyRows, ToModel
 {
-    use SkipsFailures, SkipsErrors, Importable;
+    use SkipsFailures, SkipsErrors;
 
     public function headingRow(): int
     {

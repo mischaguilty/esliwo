@@ -50,7 +50,12 @@
             @foreach($placements as $placement)
                 <button class="btn flex-fill shadow-none {{ $selectedPlacement === $placement ? 'btn-secondary' : 'btn-outline-secondary' }}"
                         type="button" wire:click="$set('selectedPlacement', '{{ $placement }}')">
-                    {{ __(implode(' ', ['Placement', $placement])) }}
+                    <span class="d-md-block d-none">
+                        {{ __(implode(' ', ['Placement', $placement])) }}
+                    </span>
+                    <span class="d-block d-md-none">
+                        {{ empty($placement) ? __('All') : $placement }}
+                    </span>
                 </button>
             @endforeach
         </div>

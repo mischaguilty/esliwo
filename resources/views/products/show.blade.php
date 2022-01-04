@@ -22,8 +22,19 @@
         </ol>
     </nav>
 
-    <h1>@yield('title')</h1>
-    <p>{{ $product->name }}</p>
+    <div class="d-inline-flex justify-content-between align-items-center w-100">
+        <div class="flex-grow-1">
+            <h1>@yield('title')</h1>
+            <h4>{{ $product->name }}</h4>
+        </div>
+        <div class="flex-shrink-1">
+            @isset($actual_price)
+                <h3 class="text-success">
+                    {{ $actual_price  }}
+                </h3>
+            @endisset
+        </div>
+    </div>
 
     <div class="my-3 justify-content-around d-inline-flex w-100">
         @if($vehicle = $product->vehicle)
@@ -60,8 +71,10 @@
             </a>
         @endif
     </div>
-    @forelse($product->stocks()->get() as $stock)
-        <livewire:stock-products.item :stock="$stock" :product="$product"/>
+    @forelse($stockProducts as $stockProduct)
+        <livewire:stock-products.item :stockProduct="$stockProduct"
+                                      wire:key="{{ implode('_', [$stockProduct->stock_id, 'products', now()->timestamp]) }}"/>
     @empty
     @endforelse
+</div>
 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\StockProducts;
 
+use App\Jobs\GetStockProductInfoJob;
 use App\Models\Product;
 use App\Models\Stock;
 use App\Models\StockProduct;
@@ -12,37 +13,25 @@ use Livewire\Component;
 
 class Item extends Component
 {
-    public Stock $stock;
-    public Product $product;
-    public ?StockProduct $stockProduct;
-
-    public function mount(Stock $stock, Product $product, StockProduct $stockProduct = null)
-    {
-        $this->stock = $stock;
-        $this->product = $product;
-
-        $this->stockProduct = optional($stockProduct ?? StockProduct::query()->firstOrCreate([
-                'stock_id' => $this->stock->id,
-                'product_id' => $this->product->id,
-            ]), function (StockProduct $stockProduct) {
-            return $stockProduct;
-        });
-    }
-
-    protected $listeners = [
-        '$refresh',
-    ];
-
+    public StockProduct $stockProduct;
+    
     public function render(): Factory|View|Application
     {
         return view('stock-products.item')->with([
-
+            'stock' => optional($this->stockProduct->stock()->first() ?? null, function (Stock $stock) {
+                return $stock;
+            }),
+            'product' => optional($this->stockProduct->product()->first() ?? null, function (Product $product) {
+                return $product;
+            }),
+            'actual_price' => $this->stockProduct->actual_price,
+            'actual_quantity' => $this->stockProduct->actual_quantity,
         ]);
     }
 
     public function getStockProductInfo()
     {
-
+        dispatch(new GetStockProductInfoJob($this->stockProduct))->onQueue('default')->afterResponse();
         $this->emit('$refresh');
     }
 }

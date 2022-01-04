@@ -16,10 +16,6 @@ class Index extends Component
     use WithPagination;
 
     public string $search = '';
-    public string $sort = 'Name';
-    public array $sorts = ['Name', 'Newest', 'Oldest'];
-    public string $filter = 'All';
-    public array $filters = ['All', 'Custom'];
 
     protected $listeners = ['$refresh'];
 
@@ -39,17 +35,6 @@ class Index extends Component
 
     public function query(): Builder
     {
-        //        switch ($this->sort) {
-//            case 'Name': $query->orderBy('name'); break;
-//            case 'Newest': $query->orderByDesc('created_at'); break;
-//            case 'Oldest': $query->orderBy('created_at'); break;
-//        }
-//
-//        switch ($this->filter) {
-//            case 'All': break;
-//            case 'Custom': $query->whereNull('created_at'); break;
-//        }
-//
         return Vehicle::query()->when($this->search, function (Builder $query) {
             return $query->where(function (Builder $query) {
                 $query->orWhere('name', 'like', '%' . $this->search . '%')

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Kirschbaum\PowerJoins\PowerJoins;
+use MVanDuijker\TransactionalModelEvents\TransactionalAwareEvents;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -18,6 +19,7 @@ class Product extends Model implements HasMedia
     use HasFactory;
     use InteractsWithMedia;
     use PowerJoins;
+    use TransactionalAwareEvents;
 
     protected $table = 'products';
 
@@ -32,6 +34,21 @@ class Product extends Model implements HasMedia
         'search_name',
         'note',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::registerModelEvent('afterCommit.created', function (Product $product) {
+            Stock::all()->each(function (Stock $stock) use ($product) {
+                StockProduct::query()->firstOrCreate([
+                    'stock_id' => $stock->id,
+                    'product_id' => $product->id,
+                ]);
+            });
+        });
+    }
+
 
     public function scopeGlasses(Builder $builder): Builder
     {

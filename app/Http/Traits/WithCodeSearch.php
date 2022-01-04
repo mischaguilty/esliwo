@@ -14,12 +14,13 @@ trait WithCodeSearch
         $this->emit('$refresh');
     }
 
-    public function queryCodeSearch(Builder $builder)
+    public function queryCodeSearch(Builder $builder): Builder
     {
-        return $builder->when(!empty($this->search), function (Builder $builder) {
-            $builder->where('elsie_code', 'like', $this->search . '%');
+        return $builder->where(function (Builder $builder) {
+            $builder->orWhere('elsie_code', 'like', $this->search . '%')
+                ->orWhereHas('vehicle', function (Builder $builder) {
+                    return $builder->where('name', 'like', '%' . $this->search . '%');
+                });
         });
     }
-
-
 }

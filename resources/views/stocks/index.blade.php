@@ -1,6 +1,21 @@
 @section('title', __('Stocks'))
 
 <div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ route('home') }}" class="text-decoration-none text-secondary">
+                    <i class="fa fa-home"></i>
+                </a>
+            </li>
+
+            <li class="breadcrumb-item active">
+                <a href="{{ route('stocks') }}" class="text-decoration-none text-black">
+                    {{ __('Stocks') }}
+                </a>
+            </li>
+        </ol>
+    </nav>
     <h1>@yield('title')</h1>
 
     <div class="row justify-content-between">
@@ -11,23 +26,6 @@
                        class="form-control shadow-none" wire:model.debounce.500ms="search">
             </div>
         </div>
-        {{--        <div class="col-lg-auto mb-3">--}}
-        {{--            <button type="button" class="btn btn-primary" wire:click="$emit('showModal', 'stocks.save')">--}}
-        {{--                <x-ui::icon name="plus"/> {{ __('Create') }}--}}
-        {{--            </button>--}}
-
-        {{--            <x-ui::dropdown icon="sort" :label="__($sort)">--}}
-        {{--                @foreach($sorts as $sort)--}}
-        {{--                    <x-ui::dropdown-item :label="__($sort)" click="$set('sort', '{{ $sort }}')"/>--}}
-        {{--                @endforeach--}}
-        {{--            </x-ui::dropdown>--}}
-
-        {{--            <x-ui::dropdown icon="filter" :label="__($filter)">--}}
-        {{--                @foreach($filters as $filter)--}}
-        {{--                    <x-ui::dropdown-item :label="__($filter)" click="$set('filter', '{{ $filter }}')"/>--}}
-        {{--                @endforeach--}}
-        {{--            </x-ui::dropdown>--}}
-        {{--        </div>--}}
     </div>
 
     <div class="list-group mb-3">
@@ -56,15 +54,6 @@
                                 </div>
                             </div>
                         </a>
-
-                        {{--                        <x-ui::action icon="eye" :title="__('Read')"--}}
-                        {{--                                      click="$emit('showModal', 'stocks.read', {{ $stock->id }})"/>--}}
-
-                        {{--                        <x-ui::action icon="pencil-alt" :title="__('Update')"--}}
-                        {{--                                      click="$emit('showModal', 'stocks.save', {{ $stock->id }})"/>--}}
-
-                        {{--                        <x-ui::action icon="trash-alt" :title="__('Delete')" click="delete({{ $stock->id }})"--}}
-                        {{--                                      onclick="confirm('{{ __('Are you sure?') }}') || event.stopImmediatePropagation()"/>--}}
                     </div>
                 </div>
             </div>
