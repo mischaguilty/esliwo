@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Actions\StockProductInfoAction;
+use App\Events\StockProductUpdatedEvent;
 use App\Models\StockProduct;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -23,7 +24,7 @@ class GetStockProductInfoJob implements ShouldQueue
      */
     public function __construct(StockProduct $stockProduct)
     {
-        $this->stockProduct = $stockProduct->withoutRelations();
+        $this->stockProduct = $stockProduct;
     }
 
     /**
@@ -34,5 +35,6 @@ class GetStockProductInfoJob implements ShouldQueue
     public function handle(StockProductInfoAction $action)
     {
         $action->handle($this->stockProduct);
+        event(new StockProductUpdatedEvent($this->stockProduct->refresh()));
     }
 }

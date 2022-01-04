@@ -25,11 +25,6 @@ class StockProduct extends Pivot
         'product_id',
     ];
 
-    protected $withCount = [
-        'prices',
-        'quantities',
-    ];
-
     public static function findByTrashCode(string $trashCode): ?StockProduct
     {
         $trashCode = collect(explode('_', $trashCode));

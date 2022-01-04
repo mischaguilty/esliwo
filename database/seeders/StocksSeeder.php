@@ -64,7 +64,7 @@ class StocksSeeder extends Seeder
                 'name' => 'Черкассы',
             ],
             [
-                'shop_id' => 30,
+                'shop_id' => 1,
                 'name' => 'Киев',
             ],
             [

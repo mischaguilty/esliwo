@@ -25,11 +25,6 @@ class Show extends Component
         '$refresh',
     ];
 
-    public function mount(StockProduct $stockProduct)
-    {
-        $this->stockProduct = $stockProduct;
-    }
-
     public function route(): \Illuminate\Routing\Route|array
     {
         return Route::get('/stock-products/{stockProduct}', static::class)
@@ -101,7 +96,7 @@ class Show extends Component
 
     public function getStockProductInfo()
     {
-        dispatch(new GetStockProductInfoJob($this->stockProduct))->onQueue('default')->afterResponse();
+        dispatch(new GetStockProductInfoJob($this->stockProduct->withoutRelations()))->onQueue('default')->afterResponse();
         $this->emit('$refresh');
     }
 }
