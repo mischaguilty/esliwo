@@ -47,17 +47,27 @@ class Show extends Component
         return view('stock-products.show')->with([
             'pricesChartModel' => optional(
                     $this->stockProduct->has('prices')
-                        ? $this->stockProduct->prices()->get()->reduce(function ($chartModel, StockProductPrice $price) {
-                        return $chartModel->addPoint($price->created_at->toFormattedDateString(), $price->price, ['id' => $price->id]);
-                    },
-                        LivewireCharts::areaChartModel()
-                            ->setAnimated(true)
-                            ->setSmoothCurve()
-                            ->setLegendVisibility(true)
-                            ->addPoint('', optional($this->stockProduct->prices()->first() ?? null, function (StockProductPrice $price) {
-                                    return $price->price;
-                                }) ?? 0)
-                    )
+                        ? $this->stockProduct->prices()
+                        ->oldest()
+                        ->get()->groupBy(function ($item) {
+                            return $item->created_at->format('Y-m-d');
+                        })->map(function ($chunk) {
+                            return $chunk->last();
+                        })
+                        ->reduce(function ($chartModel, StockProductPrice $price) {
+                            return $chartModel->addPoint(
+                                $price->created_at->longRelativeToNowDiffForHumans(),
+                                $price->price, ['id' => $price->id]
+                            );
+                        },
+                            LivewireCharts::areaChartModel()
+                                ->setAnimated(true)
+                                ->setSmoothCurve()
+                                ->setLegendVisibility(true)
+                                ->addPoint('', optional($this->stockProduct->prices()->first() ?? null, function (StockProductPrice $price) {
+                                        return $price->price;
+                                    }) ?? 0)
+                        )
                         : null, function (AreaChartModel $chartModel) {
                     return $chartModel->setColor('green')->addPoint(
                         '',
@@ -66,31 +76,40 @@ class Show extends Component
                         }) ?? 0
                     );
                 }) ?? null,
-            'quantityChartModel' => optional(
+            'quantityChartModel' =>
+                optional(
                     $this->stockProduct->has('quantities')
-                        ? $this->stockProduct->quantities()->get()->reduce(
-                        function ($chartModel, StockProductQuantity $quantity) {
-                            return $chartModel->addPoint(
-                                $quantity->created_at->toFormattedDateString(),
-                                $quantity->quantity,
-                                ['id' => $quantity->id]
-                            );
-                        },
-                        LivewireCharts::areaChartModel()
-                            ->setAnimated(true)
-                            ->setSmoothCurve()
-                            ->setLegendVisibility(true)
-                            ->addPoint('',
-                                optional($this->stockProduct->quantities()->first() ?? null, function (StockProductQuantity $quantity) {
-                                    return $quantity->quantity;
-                                }) ?? 0))
+                        ? $this->stockProduct->quantities()
+                        ->oldest()
+                        ->get()->groupBy(function ($item) {
+                            return $item->created_at->format('Y-m-d');
+                        })->map(function ($chunk) {
+                            return $chunk->last();
+                        })
+                        ->reduce(
+                            function ($chartModel, StockProductQuantity $quantity) {
+                                return $chartModel->addPoint(
+                                    $quantity->created_at->longRelativeToNowDiffForHumans(),
+                                    $quantity->quantity,
+                                    ['id' => $quantity->id]
+                                );
+                            },
+                            LivewireCharts::areaChartModel()
+                                ->setAnimated(true)
+                                ->setSmoothCurve()
+                                ->setLegendVisibility(true)
+                                ->addPoint('',
+                                    optional($this->stockProduct->quantities()->first() ?? null, function (StockProductQuantity $quantity) {
+                                        return $quantity->quantity;
+                                    }) ?? 0))
                         : null, function ($chartModel) {
                     return $chartModel->setColor('blue')->addPoint(
                         '',
                         optional($this->stockProduct->actual_quantity ?? null, function (StockProductQuantity $quantity) {
                             return $quantity->quantity;
                         }) ?? 0);
-                }) ?? null,
+                }) ??
+                null,
         ]);
     }
 

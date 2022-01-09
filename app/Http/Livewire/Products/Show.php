@@ -11,10 +11,17 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Route;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Show extends Component
 {
+    use WithPagination;
+
     public Product $product;
+
+    protected $listeners = [
+        '$refresh',
+    ];
 
     public function route(): \Illuminate\Routing\Route|array
     {

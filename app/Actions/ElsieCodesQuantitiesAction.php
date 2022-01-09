@@ -12,12 +12,14 @@ class ElsieCodesQuantitiesAction
 {
     use AsAction;
 
-    public function handle(array $codes): Collection
+    public function handle(array $codes): Collection|false
     {
-        ElsieTrashAction::make()->handle($codes, true);
-        $trash = ElsieShowTrashAction::make()->handle();
-        ElsieTrashAction::make()->handle($codes);
-        return $this->parseTrash($trash, $codes);
+        if (ElsieTrashAction::make()->handle($codes, true) !== false) {
+            $trash = ElsieShowTrashAction::make()->handle();
+            ElsieTrashAction::make()->handle($codes);
+            return $this->parseTrash($trash, $codes);
+        }
+        return ElsieTrashAction::make()->handle($codes);
     }
 
     protected function parseTrash(array $trash, array $codes): Collection

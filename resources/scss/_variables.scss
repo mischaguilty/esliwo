@@ -3,5 +3,10 @@ $enable-negative-margins: true;
 $container-max-width: 960px;
 
 .container {
-    max-width: $container-max-width !important;
+  max-width: $container-max-width !important;
 }
+
+$navbar-light-toggler-border-color: rgba(0, 0, 0, 0);
+$navbar-dark-toggler-border-color: rgba(0, 0, 0, 0);
+$enable-gradients: true;
+$enable-shadows: true;

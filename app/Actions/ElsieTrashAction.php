@@ -14,13 +14,13 @@ class ElsieTrashAction extends CookieAction
     /**
      * @throws Exception
      */
-    public function handle(array $codes = [], bool $filled = false, array $stocks = []): string
+    public function handle(array $codes = [], bool $filled = false, array $stocks = []): string|false
     {
         $this->setCredentials();
         return $this->getResponse($codes, $filled, $stocks);
     }
 
-    protected function getPostFields(array $codes, bool $filled, array $stocks): string
+    protected function getPostFields(array $codes, bool $filled): string
     {
         return implode('&', [
             'shop=1',
@@ -43,7 +43,7 @@ class ElsieTrashAction extends CookieAction
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => $this->getPostFields($codes, $filled, $sctocks),
+            CURLOPT_POSTFIELDS => $this->getPostFields($codes, $filled),
             CURLOPT_CONNECTTIMEOUT => 10,
             CURLOPT_TIMEOUT => 20,
             CURLOPT_HTTPHEADER => [

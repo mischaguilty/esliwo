@@ -17,6 +17,11 @@ class GetStockProductInfoJob implements ShouldQueue
 
     private StockProduct $stockProduct;
 
+    public function getStockProduct(): StockProduct
+    {
+        return $this->stockProduct;
+    }
+
     /**
      * Create a new job instance.
      *
@@ -35,6 +40,6 @@ class GetStockProductInfoJob implements ShouldQueue
     public function handle(StockProductInfoAction $action)
     {
         $action->handle($this->stockProduct);
-        event(new StockProductUpdatedEvent($this->stockProduct->refresh()));
+        StockProductUpdatedEvent::dispatch($this->getStockProduct());
     }
 }

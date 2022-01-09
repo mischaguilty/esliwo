@@ -49,7 +49,7 @@
             @if($actualPrice = $stockProduct->actual_price)
                 <div class="d-block mb-1">
                     <div class="d-flex justify-content-around"
-                         title="{{now()->sub($actualPrice->created_at)->shortRelativeToNowDiffForHumans() }}">
+                         title="{{now()->sub($actualPrice->created_at)->longRelativeToNowDiffForHumans() }}">
                         <small class="text-secondary">
                             {{ __('Last known price') }}
                         </small>
@@ -99,7 +99,7 @@
 
     @if(!is_null($pricesChartModel))
         <div class="shadow-sm mb-5" style="height: 10rem;">
-            <h4 class="m-0 p-0">{{ __('Price Dynamic') }}</h4>
+            <h4 class="m-0 p-0 text-center">{{ __('Price Dynamic') }}</h4>
             <livewire:livewire-area-chart
                     key="{{ $pricesChartModel->reactiveKey() }}"
                     :area-chart-model="$pricesChartModel"
