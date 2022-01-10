@@ -18,10 +18,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int)$user->id === (int)$id;
 });
 
-\Illuminate\Support\Facades\Broadcast::channel('sporoducts', function ($user) {
-    return true;
-});
-
 Broadcast::channel('stock-product.{stockProduct}', function ($user, StockProduct $stockProduct) {
-    return true;
+    return $stockProduct->exists && auth()->id() && auth()->id() === $user->id;
 });
