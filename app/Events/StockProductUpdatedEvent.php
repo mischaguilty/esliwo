@@ -32,6 +32,14 @@ class StockProductUpdatedEvent implements ShouldBroadcast
 
     public function broadcastOn(): PrivateChannel
     {
-        return new PrivateChannel('stock-products.' . $this->stockProduct->id);
+        return new PrivateChannel($this->getChannelName());
+    }
+
+    protected function getChannelName(): string
+    {
+        return implode('.', [
+            'stock-products',
+            $this->stockProduct->id,
+        ]);
     }
 }

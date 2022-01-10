@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Auth;
 
-use App\Actions\ElsieLoginAction;
+use App\Actions\Auth\ElsieLoginAction;
 use App\Models\ElsieCredentials;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;

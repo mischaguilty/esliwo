@@ -73,7 +73,7 @@
     </div>
     @forelse($stockProducts as $stockProduct)
         <livewire:stock-products.item :stockProduct="$stockProduct"
-                                      wire:key="{{ implode('_', [$stockProduct->stock_id, 'products', now()->timestamp]) }}"/>
+                                      wire:key="{{ implode('_', [$stockProduct->id, 'stock-product', now()->timestamp]) }}"/>
     @empty
     @endforelse
 </div>

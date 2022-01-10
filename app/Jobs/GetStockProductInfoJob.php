@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Actions\StockProductInfoAction;
-use App\Events\StockProductUpdatedEvent;
+use App\Actions\Data\StockProductInfoAction;
+use App\Events\ProductQuantityUpdated;
 use App\Models\StockProduct;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -40,6 +40,6 @@ class GetStockProductInfoJob implements ShouldQueue
     public function handle(StockProductInfoAction $action)
     {
         $action->handle($this->stockProduct);
-        StockProductUpdatedEvent::dispatch($this->getStockProduct());
+        ProductQuantityUpdated::dispatch($this->stockProduct);
     }
 }

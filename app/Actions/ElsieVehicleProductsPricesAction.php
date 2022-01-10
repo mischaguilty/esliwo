@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Actions\Data\ElsieSearchAction;
 use App\Models\Manufacturer;
 use App\Models\Product;
 use App\Models\Stock;

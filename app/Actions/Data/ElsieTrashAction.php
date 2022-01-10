@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Data;
 
-use Exception;
+use App\Actions\CookieAction;
 
 class ElsieTrashAction extends CookieAction
 {
@@ -11,13 +11,11 @@ class ElsieTrashAction extends CookieAction
 
     protected static int $MAX_COUNT = 1000;
 
-    /**
-     * @throws Exception
-     */
-    public function handle(array $codes = [], bool $filled = false, array $stocks = []): string|false
+    //Using to add array of trash_codes to the trash
+    public function handle(array $codes = [], bool $filled = false): string|false
     {
         $this->setCredentials();
-        return $this->getResponse($codes, $filled, $stocks);
+        return $this->getResponse($codes, $filled);
     }
 
     protected function getPostFields(array $codes, bool $filled): string
@@ -33,7 +31,7 @@ class ElsieTrashAction extends CookieAction
         ]);
     }
 
-    protected function getResponse($codes, $filled, $sctocks): bool|string
+    protected function getResponse($codes, $filled): bool|string
     {
         $curl = curl_init($this->url);
 

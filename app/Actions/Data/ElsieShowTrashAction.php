@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Data;
 
+use App\Actions\CookieAction;
 use App\Models\ElsieCookie;
 use Illuminate\Support\Facades\Http;
+use function optional;
 
 class ElsieShowTrashAction extends CookieAction
 {
     protected string $url = 'http://elsie.ua/rus/shop/showtrash';
 
-    public function handle(): array
+    public function handle(): ?array
     {
         $this->setCredentials();
         return optional(Http::withHeaders([

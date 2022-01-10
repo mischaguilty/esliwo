@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Actions\ElsieSearchAction;
+use App\Actions\Data\ElsieSearchAction;
 use App\Models\Product;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;

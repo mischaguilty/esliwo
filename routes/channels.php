@@ -12,10 +12,12 @@
 */
 
 
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-    return (int)$user->id === (int)$id;
-});
-Broadcast::channel('stock-products.{stockProductId}', function ($user) {
+use App\Models\StockProduct;
+
+\Illuminate\Support\Facades\Broadcast::channel('sporoducts', function ($user) {
     return true;
 });
 
+Broadcast::channel('stock-product.{stockProduct}', function ($user, StockProduct $stockProduct) {
+    return true;
+});

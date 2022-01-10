@@ -16,18 +16,16 @@
             </a>
         </div>
         <div class="d-inline-flex flex-nowrap">
-            @if(is_a($actual_quantity, \App\Models\StockProductQuantity::class))
-                <div class="d-block">
-                    <div class="text-primary">{{ $actual_quantity->quantity }} -
-                        @if($prev_quantity = $prev_quantity ?? $actual_quantity)
-                            <span class="text-secondary">({{ $prev_quantity->quantity}}
-                        , {{ $prev_quantity->created_at->shortRelativeToNowDiffForHumans() }})
-                        </span>
-                        @endif
+            @if($quantity >= 0)
+                <div class="d-block text-center">
+                    <div class="text-primary">
+                        {{ $actual_quantity->quantity }}
                     </div>
                     <div class="fw-lighter">
                         {{ $actual_quantity->created_at->shortRelativeToNowDiffForHumans() }}
                     </div>
+                    <button class="btn btn-primary shadow-none"
+                            wire:click="getStockProductInfo({{ $stockProduct->id }})">{{ __('Update') }}</button>
                 </div>
             @else
                 <div class="spinner-border text-secondary" role="status"></div>
@@ -35,3 +33,23 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+
+    <script>
+        {{--window.Echo.channel("stock-product.{{ $stockProduct->id }}").listen('ProductQuantityUpdated', function (e) {--}}
+        //     window.livewire.emit('$refresh');
+        {{--    window.document.getElementsByName('stockProduct_{{ $stockProduct->id }}').forEach(function (element, index) {--}}
+        //         element.classList.add('bg-danger');
+        //     });
+        // });
+
+        window.Echo.channel("sproducts").listen('ProductQuantityUpdated', function (e) {
+            console.log(e.stockProduct.id);
+            window.livewire.emit('stockProductUpdated', e.stockProduct.id);
+            // window.document.getElementsByName('stockProduct_' + e.stockProduct.id).forEach(function (element, index) {
+            //     element.classList.add('bg-danger');
+            // });
+        });
+    </script>
+@endpush

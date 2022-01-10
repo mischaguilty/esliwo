@@ -42,6 +42,8 @@ class Show extends Component
                         'prices', 'quantities',
                     ]);
                 });
+            })->filter(function ($item) {
+                return is_a($item, StockProduct::class);
             })->sortByDesc(function (StockProduct $stockProduct) {
                 return $stockProduct->actual_quantity?->quantity;
             }),

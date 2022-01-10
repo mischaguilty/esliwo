@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Data;
 
-use App\Models\ElsieCookie;
+use App\Actions\CookieAction;
 use App\Models\ElsieCredentials;
 use Illuminate\Support\Facades\Http;
+use function optional;
 
 class ElsieSearchAction extends CookieAction
 {

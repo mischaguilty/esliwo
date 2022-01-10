@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Auth;
 
 use App\Models\ElsieCookie;
 use App\Models\ElsieCredentials;
 use GuzzleHttp\Cookie\SetCookie;
 use Illuminate\Support\Facades\Http;
 use Lorisleiva\Actions\Concerns\AsAction;
+use function optional;
 
 class ElsieLoginAction
 {

@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Actions\Auth\ElsieLoginAction;
 use App\Models\ElsieCookie;
 use App\Models\ElsieCredentials;
 use App\Models\User;

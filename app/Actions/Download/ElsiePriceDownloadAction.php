@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Download;
 
 use Lorisleiva\Actions\Concerns\AsAction;
+use function optional;
+use function public_path;
 
 class ElsiePriceDownloadAction
 {

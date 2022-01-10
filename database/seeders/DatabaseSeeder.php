@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Actions\ElsiePriceDownloadAction;
+use App\Actions\Download\ElsiePriceDownloadAction;
 use App\Imports\PriceImport;
 use Illuminate\Database\Seeder;
 use Maatwebsite\Excel\Facades\Excel;
