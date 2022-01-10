@@ -20,7 +20,7 @@ class Password extends Component
         $this->user = $user;
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('users.password');
     }

@@ -25,7 +25,7 @@ class Show extends Component
         '$refresh',
     ];
 
-    public function route(): \Illuminate\Routing\Route|array
+    public function route()
     {
         return Route::get('/stock-products/{stockProduct}', static::class)
             ->name('stock-products.show')
@@ -42,7 +42,7 @@ class Show extends Component
         dd($point);
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('stock-products.show')->with([
             'pricesChartModel' => optional(

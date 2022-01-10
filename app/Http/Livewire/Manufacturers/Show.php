@@ -32,7 +32,7 @@ class Show extends Component
             ->middleware('auth');
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('manufacturers.show')->with([
             'products' => $this->query()->paginate(),

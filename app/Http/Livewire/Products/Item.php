@@ -12,7 +12,7 @@ class Item extends Component
 {
     public Product $product;
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('products.item');
     }

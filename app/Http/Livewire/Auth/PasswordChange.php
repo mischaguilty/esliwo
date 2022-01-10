@@ -13,7 +13,7 @@ class PasswordChange extends Component
 {
     use WithModel;
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('auth.password-change');
     }

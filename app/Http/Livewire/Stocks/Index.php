@@ -27,7 +27,7 @@ class Index extends Component
             ->middleware('auth');
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('stocks.index', [
             'stocks' => $this->query()->get(),

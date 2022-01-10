@@ -14,12 +14,12 @@ class Nav extends Component
 {
     protected $listeners = ['$refresh'];
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('layouts.nav');
     }
 
-    public function logout(): RedirectResponse|Redirector
+    public function logout()
     {
         Auth::logout();
 

@@ -19,14 +19,14 @@ class Login extends Component
 {
     use WithModel;
 
-    public function route(): \Illuminate\Routing\Route|array
+    public function route()
     {
         return Route::get('/login', static::class)
             ->name('login')
             ->middleware('guest');
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('auth.login');
     }

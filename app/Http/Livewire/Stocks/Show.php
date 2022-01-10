@@ -17,7 +17,7 @@ class Show extends Component
 
     public Stock $stock;
 
-    public function route(): \Illuminate\Routing\Route
+    public function route()
     {
         return Route::get('/stocks/{stock}', static::class)
             ->name('stocks.show')

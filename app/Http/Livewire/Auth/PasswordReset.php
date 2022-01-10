@@ -17,7 +17,7 @@ class PasswordReset extends Component
 {
     use WithModel;
 
-    public function route(): \Illuminate\Routing\Route|array
+    public function route()
     {
         return Route::get('/password-reset/{token}/{email}', static::class)
             ->name('password.reset')
@@ -32,7 +32,7 @@ class PasswordReset extends Component
         ]);
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('auth.password-reset');
     }

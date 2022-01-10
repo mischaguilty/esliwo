@@ -31,7 +31,7 @@ class ElsieSearch extends Component
             ->middleware('auth');
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('elsie-search')->with([
             'products' => $this->query()->paginate(),

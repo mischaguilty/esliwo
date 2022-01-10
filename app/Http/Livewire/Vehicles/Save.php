@@ -21,7 +21,7 @@ class Save extends Component
         $this->setModel($vehicle->toArray());
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('vehicles.save');
     }

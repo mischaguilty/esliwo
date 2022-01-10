@@ -19,7 +19,7 @@ class ProfileUpdate extends Component
         $this->setModel(Auth::user()->toArray());
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('auth.profile-update');
     }

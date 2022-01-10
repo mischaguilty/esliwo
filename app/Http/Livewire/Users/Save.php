@@ -22,7 +22,7 @@ class Save extends Component
         $this->setModel($user->toArray());
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('users.save');
     }

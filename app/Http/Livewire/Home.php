@@ -10,14 +10,14 @@ use Livewire\Component;
 
 class Home extends Component
 {
-    public function route(): \Illuminate\Routing\Route|array
+    public function route()
     {
         return Route::get('/home', static::class)
             ->middleware('auth')
             ->name('home');
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('home');
     }

@@ -25,14 +25,14 @@ class Index extends Component
 
     protected $listeners = ['$refresh'];
 
-    public function route(): \Illuminate\Routing\Route|array
+    public function route()
     {
         return Route::get('/products', static::class)
             ->name('products')
             ->middleware('auth');
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('products.index', [
             'products' => $this->query()->paginate(),

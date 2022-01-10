@@ -17,7 +17,7 @@ class Show extends Component
 
     public Vehicle $vehicle;
 
-    public function route(): \Illuminate\Routing\Route|array
+    public function route()
     {
         return Route::get('/vehicles/{vehicle}', static::class)
             ->name('vehicles.show')
@@ -29,7 +29,7 @@ class Show extends Component
         return $this->vehicle->products()->getQuery();
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('vehicles.show')->with([
             'products' => $this->query()->paginate(),

@@ -19,14 +19,14 @@ class Index extends Component
 
     protected $listeners = ['$refresh'];
 
-    public function route(): \Illuminate\Routing\Route|array
+    public function route()
     {
         return Route::get('/vehicles', static::class)
             ->name('vehicles')
             ->middleware('auth');
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('vehicles.index', [
             'vehicles' => $this->query()->paginate(),

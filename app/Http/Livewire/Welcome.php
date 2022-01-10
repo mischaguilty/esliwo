@@ -10,14 +10,14 @@ use Livewire\Component;
 
 class Welcome extends Component
 {
-    public function route(): \Illuminate\Routing\Route
+    public function route()
     {
         return
             Route::get('/', static::class)
                 ->name('welcome');
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('welcome');
     }

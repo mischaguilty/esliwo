@@ -54,7 +54,7 @@ class Item extends Component
         }
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         if ($actualQuantity = $this->stockProduct->actual_quantity) {
         } else {

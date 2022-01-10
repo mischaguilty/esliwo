@@ -22,14 +22,14 @@ class Register extends Component
 {
     use WithHoney, WithModel;
 
-    public function route(): \Illuminate\Routing\Route|array
+    public function route()
     {
         return Route::get('/register', static::class)
             ->name('register')
             ->middleware('guest');
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('auth.register');
     }
@@ -43,7 +43,7 @@ class Register extends Component
         ];
     }
 
-    public function register(): RedirectResponse|Redirector
+    public function register()
     {
         $this->validateModel();
 

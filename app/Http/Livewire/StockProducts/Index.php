@@ -42,14 +42,14 @@ class Index extends Component
         });
     }
 
-    public function route(): \Illuminate\Routing\Route|array
+    public function route()
     {
         return Route::get('/stock/{stock}/products', static::class)
             ->name('stock-products')
             ->middleware('auth');
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('stock-products.index')->with([
             'sProducts' => $this->query()->paginate(),

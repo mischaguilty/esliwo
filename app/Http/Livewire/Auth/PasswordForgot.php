@@ -16,14 +16,14 @@ class PasswordForgot extends Component
 
     public $status;
 
-    public function route(): \Illuminate\Routing\Route|array
+    public function route()
     {
         return Route::get('/password-forgot', static::class)
             ->name('password.forgot')
             ->middleware('guest');
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('auth.password-forgot');
     }

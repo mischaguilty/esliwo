@@ -26,7 +26,7 @@ class Item extends Component
         }) : null;
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('stocks.item');
     }

@@ -23,14 +23,14 @@ class Show extends Component
         '$refresh',
     ];
 
-    public function route(): \Illuminate\Routing\Route|array
+    public function route()
     {
         return Route::get('/products/{product}', static::class)
             ->name('products.show')
             ->middleware('auth');
     }
 
-    public function render(): Factory|View|Application
+    public function render()
     {
         return view('products.show')->with([
             'stockProducts' => Stock::query()->get()->toBase()->map(function (Stock $stock) {
@@ -45,7 +45,7 @@ class Show extends Component
             })->filter(function ($item) {
                 return is_a($item, StockProduct::class);
             })->sortByDesc(function (StockProduct $stockProduct) {
-                return $stockProduct->actual_quantity?->quantity;
+                return $stockProduct->actual_quantity ? $stockProduct->actual_quantity->quantity : null;
             }),
             'actual_price' => optional($this->product->prices()->latest()->first() ?? null, function (StockProductPrice $price) {
                 return implode(' ', [$price->price, $price->currency]);
