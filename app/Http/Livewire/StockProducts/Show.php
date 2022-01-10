@@ -29,7 +29,7 @@ class Show extends Component
     {
         return Route::get('/stock-products/{stockProduct}', static::class)
             ->name('stock-products.show')
-            ->middleware('auth');
+            ->middleware(['auth', 'elsie_connection', 'elsie']);
     }
 
     public function handlePriceOnPointClick($point)

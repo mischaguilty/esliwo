@@ -12,7 +12,7 @@ class ElsieCodesQuantitiesAction
     use AsAction;
 
     //Using for an array of trash_codes
-    public function handle(array $codes): Collection|false
+    public function handle(array $codes)
     {
         if (ElsieTrashAction::make()->handle($codes, true) !== false) {
             $trash = ElsieShowTrashAction::make()->handle();

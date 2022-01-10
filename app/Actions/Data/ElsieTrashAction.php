@@ -12,7 +12,7 @@ class ElsieTrashAction extends CookieAction
     protected static int $MAX_COUNT = 1000;
 
     //Using to add array of trash_codes to the trash
-    public function handle(array $codes = [], bool $filled = false): string|false
+    public function handle(array $codes = [], bool $filled = false)
     {
         $this->setCredentials();
         return $this->getResponse($codes, $filled);
@@ -31,7 +31,7 @@ class ElsieTrashAction extends CookieAction
         ]);
     }
 
-    protected function getResponse($codes, $filled): bool|string
+    protected function getResponse($codes, $filled)
     {
         $curl = curl_init($this->url);
 

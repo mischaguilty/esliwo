@@ -33,7 +33,7 @@ class ProductQuantityUpdated implements ShouldBroadcast
      *
      * @return Channel|PrivateChannel|array
      */
-    public function broadcastOn(): Channel|PrivateChannel|array
+    public function broadcastOn()
     {
         return new Channel('sproducts');
     }

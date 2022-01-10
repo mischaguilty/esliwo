@@ -36,9 +36,14 @@
                     @endif
 
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <x-ui::icon name="user-circle"/> {{ Auth::user()->name }}
-                        </a>
+                        <span class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <a href="{{ 'http://elsie.ua' }}"
+                               class="text-decoration-none {{ $serviceState ? 'text-success' : 'text-danger'}}"
+                               title="{{ __('Service availability') }}" data-bs-toggle="tooltip">
+                                <i class="fa fa-circle"></i>
+                            </a>
+                            {{ Auth::user()->name }}
+                        </span>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
                             <x-ui::dropdown-item :label="__('Update Profile')"
                                                  click="$emit('showModal', 'auth.profile-update')"/>

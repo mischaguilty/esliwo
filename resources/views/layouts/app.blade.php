@@ -29,5 +29,11 @@
 <script src="{{ asset('js/app.js') }}?v={{ config('app.version') }}"></script>
 @stack('scripts')
 
+@if($message = session()->get('message'))
+    <script>
+        Livewire.emit('showModal', '{{ $message }}');
+    </script>
+@endif
+
 </body>
 </html>

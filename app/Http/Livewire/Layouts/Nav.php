@@ -2,11 +2,9 @@
 
 namespace App\Http\Livewire\Layouts;
 
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use App\Actions\ElsieServiceStateAction;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 use Livewire\Redirector;
 
@@ -16,13 +14,15 @@ class Nav extends Component
 
     public function render()
     {
-        return view('layouts.nav');
+        return view('layouts.nav')->with([
+//            'serviceState' => ElsieServiceStateAction::make()->handle(),
+        ]);
     }
 
-    public function logout()
+    public function logout(): Redirector
     {
         Auth::logout();
 
-        return redirect()->to('/');
+        return redirect()->route('login');
     }
 }
