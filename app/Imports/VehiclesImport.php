@@ -24,7 +24,7 @@ class VehiclesImport implements ToModel, WithHeadingRow, WithUpserts, SkipsEmpty
      *
      * @return Model|Vehicle|null
      */
-    public function model(array $row): Model|Vehicle|null
+    public function model(array $row)
     {
         if (str_contains($row['model'], 'Нераспознанное') || str_contains($row['tipy_kuzova'], 'Нераспознанное')) {
             return null;
