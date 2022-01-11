@@ -60,7 +60,18 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-lg-auto">
+            <div class="col-lg-auto text-center">
+                @if(is_a($price, \App\Models\StockProductPrice::class))
+                    <div>
+                    <strong class="text-success">{{ $price->price }}</strong> <small class="text-success">{{ __($price->currency) }}</small>
+                    </div>
+                @endif
+                @if(is_a($quantity, \App\Models\StockProductQuantity::class))
+                    <div>
+                    <strong class="text-primary">{{ $quantity->quantity }}</strong> <small class="text-primary">{{ __($quantity->units) }}</small>
+                    </div>
+                @endif
+
                 {{--                            <li>--}}
                 {{--                @forelse($product->stock_products()->get() as $stockProduct)--}}
                 {{--                    <div>--}}

@@ -22,8 +22,8 @@
                data-bs-toggle="tooltip"
                wire:loading.class="disabled"
                wire:click="getStockProductInfo">
-                <div class="fw-bold text-success {{ $quantity < 0 ? 'visually-hidden' : '' }}"  wire:loading.class="visually-hidden">
-                    {{ $quantity }} <span>{{ __('pcs') }}</span>
+                <div class="fw-bold text-primary {{ $quantity < 0 ? 'visually-hidden' : '' }}"  wire:loading.class="visually-hidden">
+                    {{ $quantity }} <span class="fw-light">{{ __('pcs') }}</span>
                 </div>
 
                 <div class="spinner-border spinner-border-sm text-secondary visually-hidden" role="status"

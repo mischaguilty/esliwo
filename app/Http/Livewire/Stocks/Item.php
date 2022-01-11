@@ -8,26 +8,26 @@ use App\Models\StockProduct;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 
 class Item extends Component
 {
     public Stock $stock;
-    public ?StockProduct $stockProduct;
-
-    public function mount(Stock $stock, Product $product = null)
-    {
-        $this->stock = $stock->loadMissing('products');
-        $this->sProduct = $product ? optional($product->exists ? $product : null, function (Product $product) {
-            return StockProduct::query()->firstOrCreate([
-                'stock_id' => $this->stock->id,
-                'product_id' => $product->id,
-            ]);
-        }) : null;
-    }
 
     public function render()
     {
-        return view('stocks.item');
+        return view('stocks.item')->with([
+            'itemsCount' => $this->query()->whereHas('prices', function (Builder $builder) {
+                return $builder->where('price', '>', 0);
+            })->whereHas('quantities', function (Builder $builder) {
+                return $builder->where('quantity', '>', 0);
+            })->count(),
+        ]);
+    }
+
+    public function query()
+    {
+        return $this->stock->stock_products()->getQuery();
     }
 }

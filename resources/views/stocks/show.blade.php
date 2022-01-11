@@ -26,9 +26,9 @@
     <h1>@yield('title')</h1>
 
     <div class="list-group mb-3">
-        @forelse($products as $product)
-            <livewire:products.item :product="$product"
-                                    wire:key="{{ implode('_', ['product', $loop->index, $product->id]) }}"
+        @forelse($stockProducts as $stockProduct)
+            <livewire:products.item :product="$stockProduct->product"
+                                    wire:key="{{ implode('_', ['product', $loop->index, $stockProduct->product->id]) }}"
             />
         @empty
             <div class="list-group-item">
@@ -37,5 +37,5 @@
         @endforelse
     </div>
 
-    <x-ui::pagination :links="$products"/>
+    <x-ui::pagination :links="$stockProducts"/>
 </div>

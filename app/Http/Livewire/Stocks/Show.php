@@ -27,12 +27,16 @@ class Show extends Component
     public function render()
     {
         return view('stocks.show')->with([
-            'products' => $this->query()->paginate(),
+            'stockProducts' => $this->query()->paginate(),
         ]);
     }
 
     public function query(): Builder
     {
-        return $this->stock->products()->getQuery();
+        return $this->stock->stock_products()->whereHas('prices', function (Builder $builder) {
+            return $builder->where('price', '>', 0);
+        })->whereHas('quantities', function (Builder $builder) {
+            return $builder->where('quantity', '>', 0);
+        })->getQuery();
     }
 }

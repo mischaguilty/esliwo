@@ -214,5 +214,6 @@
   "Last known quantity": "Последние известные остатки",
   "pcs": "шт",
   "For fresh data click ->": "Для получения данных нажмите ->",
-  "refresh": "обновить"
+  "refresh": "обновить",
+  "Click to refresh": "Нажмите, чтобы обновить"
 }
