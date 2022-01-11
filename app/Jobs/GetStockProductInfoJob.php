@@ -40,6 +40,5 @@ class GetStockProductInfoJob implements ShouldQueue
     public function handle(StockProductInfoAction $action)
     {
         $action->handle($this->stockProduct);
-        ProductQuantityUpdated::dispatch($this->stockProduct);
     }
 }

@@ -213,5 +213,6 @@
   "Last known price": "Последняя известная цена",
   "Last known quantity": "Последние известные остатки",
   "pcs": "шт",
-  "For fresh data click ->": "Для получения данных нажмите ->"
+  "For fresh data click ->": "Для получения данных нажмите ->",
+  "refresh": "обновить"
 }

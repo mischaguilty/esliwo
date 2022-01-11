@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Stock;
 use App\Models\StockProduct;
 use App\Models\StockProductPrice;
+use App\Models\StockProductQuantity;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -45,7 +46,11 @@ class Show extends Component
             })->filter(function ($item) {
                 return is_a($item, StockProduct::class);
             })->sortByDesc(function (StockProduct $stockProduct) {
-                return $stockProduct->actual_quantity ? $stockProduct->actual_quantity->quantity : null;
+                return optional($stockProduct->getActualQuantityAttribute() ?? null, function (StockProductQuantity $stockProductQuantity) {
+                    return $stockProductQuantity->quantity;
+                }) ?? optional($stockProduct->getActualPriceAttribute() ?? null, function (StockProductPrice $price) {
+                    return $price->price;
+                });
             }),
             'actual_price' => optional($this->product->prices()->latest()->first() ?? null, function (StockProductPrice $price) {
                 return implode(' ', [$price->price, $price->currency]);

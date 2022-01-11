@@ -16,40 +16,30 @@
             </a>
         </div>
         <div class="d-inline-flex flex-nowrap">
-            @if($quantity >= 0)
-                <div class="d-block text-center">
-                    <div class="text-primary">
-                        {{ $actual_quantity->quantity }}
-                    </div>
-                    <div class="fw-lighter">
-                        {{ $actual_quantity->created_at->shortRelativeToNowDiffForHumans() }}
-                    </div>
-                    <button class="btn btn-primary shadow-none"
-                            wire:click="getStockProductInfo({{ $stockProduct->id }})">{{ __('Update') }}</button>
+            <a type="button"
+               class="btn btn-link text-decoration-none"
+               title="{{ __('Click to refresh') }}"
+               data-bs-toggle="tooltip"
+               wire:loading.class="disabled"
+               wire:click="getStockProductInfo">
+                <div class="fw-bold text-success {{ $quantity < 0 ? 'visually-hidden' : '' }}"  wire:loading.class="visually-hidden">
+                    {{ $quantity }} <span>{{ __('pcs') }}</span>
                 </div>
-            @else
-                <div class="spinner-border text-secondary" role="status"></div>
-            @endif
+
+                <div class="spinner-border spinner-border-sm text-secondary visually-hidden" role="status"
+                     wire:loading.class.remove="visually-hidden"
+                     wire:loading.target="getStockProductInfo">
+                </div>
+                <small class="text-secondary fw-light" wire:loading.class="visually-hidden">{{ __('refresh') }}</small>
+            </a>
         </div>
     </div>
 </div>
 
 @push('scripts')
-
     <script>
-        {{--window.Echo.channel("stock-product.{{ $stockProduct->id }}").listen('ProductQuantityUpdated', function (e) {--}}
-        //     window.livewire.emit('$refresh');
-        {{--    window.document.getElementsByName('stockProduct_{{ $stockProduct->id }}').forEach(function (element, index) {--}}
-        //         element.classList.add('bg-danger');
-        //     });
-        // });
-
-        window.Echo.channel("sproducts").listen('ProductQuantityUpdated', function (e) {
-            console.log(e.stockProduct.id);
-            window.livewire.emit('stockProductUpdated', e.stockProduct.id);
-            // window.document.getElementsByName('stockProduct_' + e.stockProduct.id).forEach(function (element, index) {
-            //     element.classList.add('bg-danger');
-            // });
+        document.addEventListener("DOMContentLoaded", () => {
+            window.livewire.emit('$getStockProductInfo');
         });
     </script>
 @endpush

@@ -17,12 +17,10 @@ use Livewire\Component;
 class Show extends Component
 {
     public StockProduct $stockProduct;
-    public array $lineChartData;
 
     protected $listeners = [
         'onQuantitiesPointClick' => 'handleQuantityOnPointClick',
         'onPricesPointClick' => 'handlePriceOnPointClick',
-        '$refresh',
     ];
 
     public function route()
