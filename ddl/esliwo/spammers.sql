@@ -1,4 +1,4 @@
-create table agaga.spammers
+create table esliwo.spammers
 (
     id         bigint unsigned auto_increment
         primary key,
@@ -7,5 +7,6 @@ create table agaga.spammers
     blocked_at datetime     null,
     created_at timestamp    null,
     updated_at timestamp    null
-);
+)
+    collate = utf8mb4_unicode_ci;
 

@@ -1,4 +1,4 @@
-create table agaga.personal_access_tokens
+create table esliwo.personal_access_tokens
 (
     id             bigint unsigned auto_increment
         primary key,
@@ -12,8 +12,9 @@ create table agaga.personal_access_tokens
     updated_at     timestamp       null,
     constraint personal_access_tokens_token_unique
         unique (token)
-);
+)
+    collate = utf8mb4_unicode_ci;
 
 create index personal_access_tokens_tokenable_type_tokenable_id_index
-    on agaga.personal_access_tokens (tokenable_type, tokenable_id);
+    on esliwo.personal_access_tokens (tokenable_type, tokenable_id);
 

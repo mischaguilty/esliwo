@@ -1,4 +1,4 @@
-create table agaga.failed_jobs
+create table esliwo.failed_jobs
 (
     id         bigint unsigned auto_increment
         primary key,
@@ -10,5 +10,6 @@ create table agaga.failed_jobs
     failed_at  timestamp default current_timestamp() not null,
     constraint failed_jobs_uuid_unique
         unique (uuid)
-);
+)
+    collate = utf8mb4_unicode_ci;
 

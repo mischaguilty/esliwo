@@ -1,4 +1,4 @@
-create table agaga.users
+create table esliwo.users
 (
     id                bigint unsigned auto_increment
         primary key,
@@ -12,14 +12,12 @@ create table agaga.users
     updated_at        timestamp    null,
     constraint users_email_unique
         unique (email)
-);
-
-create index users_created_at_index
-    on agaga.users (created_at);
+)
+    collate = utf8mb4_unicode_ci;
 
 create index users_email_verified_at_index
-    on agaga.users (email_verified_at);
+    on esliwo.users (email_verified_at);
 
 create index users_name_index
-    on agaga.users (name);
+    on esliwo.users (name);
 
