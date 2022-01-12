@@ -10,6 +10,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class GetStockProductInfoJob implements ShouldQueue
 {
@@ -36,9 +38,12 @@ class GetStockProductInfoJob implements ShouldQueue
      * Execute the job.
      *
      * @return void
+     * @throws Throwable
      */
     public function handle(StockProductInfoAction $action)
     {
-        $action->handle($this->stockProduct);
+        DB::transaction(function () use ($action) {
+            $action->handle($this->stockProduct);
+        });
     }
 }

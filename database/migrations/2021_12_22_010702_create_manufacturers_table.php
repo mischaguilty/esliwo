@@ -18,6 +18,7 @@ class CreateManufacturersTable extends Migration
             $table->string('code_suffix')->unique();
             $table->string('name')->nullable();
             $table->string('country')->nullable();
+            $table->string('country_code')->default('xx');
             $table->timestamps();
         });
     }

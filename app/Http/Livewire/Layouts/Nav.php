@@ -14,15 +14,12 @@ class Nav extends Component
 
     public function render()
     {
-        return view('layouts.nav')->with([
-//            'serviceState' => ElsieServiceStateAction::make()->handle(),
-        ]);
+        return view('layouts.nav');
     }
 
     public function logout(): Redirector
     {
         Auth::logout();
-
         return redirect()->route('login');
     }
 }

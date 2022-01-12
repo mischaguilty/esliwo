@@ -22,11 +22,22 @@ class Manufacturer extends Model implements HasMedia
     ];
 
     protected $withCount = [
-        'products',
+        'glasses',
+        'accessories',
     ];
 
     public function products(): HasMany
     {
         return $this->hasMany(Product::class, 'manufacturer_id', 'id');
+    }
+
+    public function glasses()
+    {
+        return $this->products()->glasses();
+    }
+
+    public function accessories()
+    {
+        return $this->products()->accessories();
     }
 }

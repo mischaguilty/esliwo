@@ -18,6 +18,13 @@ class ManufacturersImport implements ToModel, WithHeadingRow, WithUpserts, WithV
     use SkipsFailures;
     use SkipsErrors;
 
+    protected array $flags = [
+        'Европа' => 'eu',
+        'Россия' => 'ru',
+        'Украина' => 'ua',
+        'Китай' => 'cn',
+    ];
+
     /**
      * @param array $row
      *
@@ -27,8 +34,11 @@ class ManufacturersImport implements ToModel, WithHeadingRow, WithUpserts, WithV
     {
         return new Manufacturer([
             'code_suffix' => trim($row['rassirenie_koda_elsi'], '-'),
-            'name' => $row['brend'],
-            'country' => $row['proizvoditel'],
+            'name' => $row['brend'] ?? null,
+            'country' => $row['proizvoditel'] ?? null,
+            'country_code' => optional($row['proizvoditel'] ?? null, function (string  $country) {
+                return $this->flags[$country] ?? 'xx';
+            }),
         ]);
     }
 

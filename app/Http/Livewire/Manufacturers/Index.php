@@ -13,13 +13,7 @@ use Livewire\WithPagination;
 
 class Index extends Component
 {
-    use WithPagination;
-
     public string $search = '';
-    public string $sort = 'Name';
-    public array $sorts = ['Name', 'Newest', 'Oldest'];
-    public string $filter = 'All';
-    public array $filters = ['All', 'Custom'];
 
     protected $listeners = ['$refresh'];
 
@@ -32,22 +26,23 @@ class Index extends Component
 
     public function render()
     {
-        return view('manufacturers.index', [
-            'manufacturers' => $this->query()->paginate(),
+        return view('manufacturers.index')->with([
+            'manufacturers' => $this->query()->get(),
         ]);
     }
 
     public function query(): Builder
     {
-        $query = Manufacturer::query()
-            ->withCount('products')
+        $query = Manufacturer::query()->withCount([
+            'glasses', 'accessories'
+        ])
             ->when($this->search, function (Builder $query) {
                 return $query->where(function (Builder $query) {
                     $query->orWhere('name', 'like', '%' . $this->search . '%')
                         ->orWhere('code_suffix', 'like', $this->search . '%');
                 });
-            })
-            ->orderByDesc('products_count');
+            })->orderByDesc('glasses_count')->orderByDesc('accessories_count')
+        ;
 
         return $query->orderBy('name');
     }

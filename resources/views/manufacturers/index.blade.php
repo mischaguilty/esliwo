@@ -49,32 +49,38 @@
     <div class="list-group mb-3">
         @forelse($manufacturers as $manufacturer)
             <div class="list-group-item list-group-item-action">
-                <div class="row align-items-center">
-                    <div class="col-lg mb-2 mb-lg-0">
+                <div class="d-inline-flex align-items-center justify-content-between w-100">
+                    <div class="flex-grow-1 mb-2 mb-lg-0">
                         <ul class="list-unstyled mb-0">
                             <li>
                                 <a href="{{ route('manufacturers.show', ['manufacturer' => $manufacturer]) }}"
-                                   class="text-decoration-none text-dark"
+                                   class="text-decoration-none text-dark {{ $manufacturer->glasses_count === 0 || $manufacturer->accessories_count === 0 ? 'disabled' : '' }}"
                                    title="{{ $manufacturer->name.' '.__('products') }}">
                                     <strong>
                                         {{ $manufacturer->name }}
                                     </strong>
+                                    <span class="fi fi-{{ $manufacturer->country_code }}"></span>
                                 </a>
                             </li>
                             <li>
-                                <label title="{{ __('code suffix') }}">
-                                    {{ $manufacturer->code_suffix }}
-                                </label>
+                                <span title="{{ __('code suffix') }}">
+                                    {{ $manufacturer->code_suffix }} <small class="text-secondary">{{ $manufacturer->country }}</small>
+                                </span>
                             </li>
                         </ul>
                     </div>
-                    <div class="col-lg-auto flex-shrink-1">
-                        <div class="text-center">
-                            <div class="text-primary">{{ $manufacturer->products_count }}</div>
+                    <div class="col-lg-auto flex-shrink-1 d-inline-flex justify-content-around">
+                        @forelse(['glasses', 'accessories'] as $scope)
+                        <div class="text-center d-block {{ $loop->first && $loop->count > 1 ? 'px-2' : ''}}">
+                            <div class="fw-bold {{ $loop->first ? 'text-primary' : 'text-info' }}">
+                                {{ $manufacturer->products()->$scope()->count() }}
+                            </div>
                             <div class="text-secondary">
-                                <small>{{ __('products associated') }}</small>
+                                <small>{{ implode('', [__($scope), ' ', __('associated')]) }}</small>
                             </div>
                         </div>
+                        @empty
+                        @endforelse
                         {{--                        <x-ui::action icon="eye" :title="__('Read')"--}}
                         {{--                                      click="$emit('showModal', 'manufacturers.read', {{ $manufacturer->id }})"/>--}}
 
@@ -92,6 +98,4 @@
             </div>
         @endforelse
     </div>
-
-    <x-ui::pagination :links="$manufacturers"/>
 </div>

@@ -198,7 +198,6 @@
   "Search Products": "Найти товары",
   "products": "товары",
   "products in stock": "товаров на складе",
-  "products associated": "товаров связано",
   "Placement ": "Все",
   "Placement A": "Ветровое",
   "Placement B": "Заднее",
@@ -215,5 +214,11 @@
   "pcs": "шт",
   "For fresh data click ->": "Для получения данных нажмите ->",
   "refresh": "обновить",
-  "Click to refresh": "Нажмите, чтобы обновить"
+  "Click to refresh": "Нажмите, чтобы обновить",
+  "glasses": "стёкол",
+  "accessories": "аксессуаров",
+  "associated": "связано",
+  "Type your credentials to login": "Введите данные учетной записи для входа в приложение",
+  "or": "или",
+  "register": "пройдите регистрацию"
 }

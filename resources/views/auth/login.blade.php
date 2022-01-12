@@ -1,23 +1,30 @@
-@section('title', __('Login'))
+@section('title', __('Type your credentials to login'))
 
-<div class="d-grid col-lg-5 mx-auto">
-    <form class="card" wire:submit.prevent="login">
-        <h5 class="card-header">
+<div class="d-grid mx-auto text-center">
+    <form wire:submit.prevent="login">
+        <h3 class="text-light">
             @yield('title')
-        </h5>
-        <div class="card-body pb-0">
-            <x-ui::input :label="__('Email')" type="email" model="email"/>
-            <x-ui::input :label="__('Password')" type="password" model="password"/>
-
-            <div class="d-flex justify-content-between">
-                <x-ui::checkbox :label="__('Remember me')" model="remember"/>
-
-                @if(Route::has('password.forgot'))
-                    <a href="{{ route('password.forgot') }}">{{ __('Forgot password?') }}</a>
-                @endif
+        </h3>
+        <div class="d-block mb-3">
+            <span class="text-light">{{ __('or') }}</span>
+            <a href="{{ route('register') }}" class="text-info text-decoration-none mb-5">
+            {{__('register')}}
+        </a>
+        </div>
+        <div class="justify-content-center flex-column w-100">
+            <div class="col-lg-6 col-md-8 col-sm-10 mb-3 d-block mx-auto">
+            <input class="form-control shadow-none @error('email') {{ 'is_invalid' }}@enderror"
+                   type="email" wire:model.defer="model.email" placeholder="{{ __('Email') }}"
+            >
+            @error('email')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+            <div class="col-lg-6 col-md-8 col-sm-10 mb-3 d-block mx-auto">
+                <input class="form-control shadow-none" type="password" wire:model.defer="model.password" placeholder="{{ __('Password') }}">
             </div>
         </div>
-        <div class="card-footer d-flex justify-content-end">
+        <div class="d-block">
             <button type="submit" class="btn btn-primary">{{ __('Login') }}</button>
         </div>
     </form>

@@ -53,11 +53,9 @@ class Login extends Component
             return;
         }
 
-        if (!Auth::attempt($this->getModel(['email', 'password']), $this->getModel('remember'))) {
+        if (!Auth::attempt($this->getModel(['email', 'password']))) {
             RateLimiter::hit($throttleKey);
-
             $this->addError('email', __('auth.failed'));
-
             return;
         }
 
