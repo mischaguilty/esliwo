@@ -7,6 +7,7 @@ use Bastinald\Ui\Traits\WithModel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class Save extends Component
@@ -29,7 +30,10 @@ class Save extends Component
 
     public function save()
     {
-        $this->validateModel($this->user->rules());
+        $this->validateModel([
+            'name' => ['required', 'string'],
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($this->user->id)],
+        ]);
 
         $this->user->fill($this->getModel(['name', 'email', 'password']))->save();
 
