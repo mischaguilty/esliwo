@@ -11,6 +11,8 @@
     "php": "^7.4",
     "ext-curl": "*",
     "asantibanez/livewire-charts": "^v2.3.0",
+    "bastinald/laravel-livewire-loader": "^2.2",
+    "bastinald/laravel-livewire-toasts": "^3.0",
     "bastinald/ui": "^2.2.2",
     "beyondcode/laravel-websockets": "^1.12.0",
     "fruitcake/laravel-cors": "^v2.0.5",
@@ -69,7 +71,11 @@
   "config": {
     "optimize-autoloader": true,
     "preferred-install": "dist",
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "treeware/plant": true,
+      "composer/package-versions-deprecated": true
+    }
   },
   "minimum-stability": "dev",
   "prefer-stable": true

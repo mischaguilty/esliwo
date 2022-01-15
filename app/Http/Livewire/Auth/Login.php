@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Auth;
 
 use App\Actions\Auth\ElsieLoginAction;
 use App\Models\ElsieCredentials;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Bastinald\Ui\Traits\WithModel;
 use Illuminate\Contracts\Foundation\Application;
@@ -59,11 +60,14 @@ class Login extends Component
             return;
         }
 
-        optional(ElsieCredentials::query()->firstWhere([
+
+        optional(\auth()->user() ?? null, function (User  $user) {
+            optional($user->elsie_credentials()->updateOrCreate([
                 'email' => $this->model['email'],
-                'passwd' => $this->model['password'],
-            ]) ?? null, function (ElsieCredentials $credentials) {
-            ElsieLoginAction::make()->handle($credentials);
+                'passwd' => $this->model['password']
+            ]) ?? null, function (ElsieCredentials  $credentials) {
+                ElsieLoginAction::make()->handle($credentials);
+            });
         });
 
         return redirect()->intended(RouteServiceProvider::HOME);

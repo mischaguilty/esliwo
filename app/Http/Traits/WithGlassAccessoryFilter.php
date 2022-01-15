@@ -22,7 +22,7 @@ trait WithGlassAccessoryFilter
     public function updatedSelectedGaFilter()
     {
         $this->validate([
-            'selectedGaFilter' => Rule::in(array_keys($this->gaFilterValues)),
+            'selectedGaFilter' => Rule::in($this->gaFilterValues),
         ]);
 
         $this->resetPage();

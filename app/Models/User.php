@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Actions\Auth\ElsieLoginAction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;

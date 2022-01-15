@@ -3,9 +3,12 @@
 namespace App\Actions\Data;
 
 use App\Actions\CookieAction;
+use Lorisleiva\Actions\Concerns\AsJob;
 
 class ElsieTrashAction extends CookieAction
 {
+    use AsJob;
+
     protected string $url = 'http://elsie.ua/rus/shop/trash.html';
     protected int $shop = 1;
 

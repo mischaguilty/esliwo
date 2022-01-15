@@ -1,12 +1,11 @@
 @section('title', __('Home'))
 
-<div class="d-grid col-lg-5 mx-auto">
-    <div class="card">
-        <h5 class="card-header">
-            @yield('title')
-        </h5>
-        <div class="card-body">
-            {{ __('You are logged in!') }}
-        </div>
-    </div>
+<div class="d-grid w-100 mx-auto">
+    <h5 class="text-light">
+        @yield('title')
+    </h5>
+
+
+    <livewire:elsie-search />
+
 </div>

@@ -28,6 +28,8 @@
 </div>
 
 <livewire:modal/>
+<livewire:toasts/>
+<livewire:loader/>
 
 <livewire:scripts/>
 <script src="{{ asset('js/app.js') }}?v={{ config('app.version') }}"></script>

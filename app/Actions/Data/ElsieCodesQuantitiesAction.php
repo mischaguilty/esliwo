@@ -5,21 +5,35 @@ namespace App\Actions\Data;
 use App\Models\StockProduct;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Bus;
 use Lorisleiva\Actions\Concerns\AsAction;
+use Lorisleiva\Actions\Concerns\AsJob;
 
 class ElsieCodesQuantitiesAction
 {
     use AsAction;
+    use AsJob;
 
     //Using for an array of trash_codes
     public function handle(array $codes)
     {
-        if (ElsieTrashAction::make()->handle($codes, true) !== false) {
-            $trash = ElsieShowTrashAction::make()->handle();
-            ElsieTrashAction::make()->handle($codes);
-            return $this->parseTrash($trash, $codes);
-        }
-        return ElsieTrashAction::make()->handle($codes);
+        Bus::chain([
+            ElsieTrashAction::makeJob($codes, true),
+            ElsieShowTrashAction::makeJob($codes),
+            ElsieTrashAction::makeJob($codes),
+        ])->dispatch();
+
+//        if (ElsieTrashAction::make()->handle($codes, true) !== false) {
+//            $trash = ElsieShowTrashAction::make()->handle();
+//            ElsieTrashAction::make()->handle($codes);
+//            return $this->parseTrash($trash, $codes);
+//        }
+//        return ElsieTrashAction::make()->handle($codes);
+    }
+
+    public function asJob($codes)
+    {
+        $this->handle($codes);
     }
 
     protected function parseTrashItem(array $item): array

@@ -18,7 +18,7 @@
     </nav>
     <h1>@yield('title')</h1>
 
-    <div class="flex-wrap flex-sm-nowrap d-flex justify-content-between mb-0 mb-sm-3">
+    <div class="flex-wrap flex-sm-nowrap row justify-content-between mb-0 mb-sm-3">
         <div class="mb-3 mb-sm-0 col flex-sm-grow-1 flex-fill">
             <div class="input-group">
                 <span class="input-group-text"><x-ui::icon name="search"/></span>
@@ -26,23 +26,22 @@
                        class="form-control shadow-none" wire:model.debounce.500ms="search">
             </div>
         </div>
-        <div class="mb-3 mb-sm-0 w-sm-auto flex-sm-shrink-1 flex-fill">
-            <div class="dropdown">
-                <input class="form-control shadow-none" placeholder="{{ $this->getSelectedGaFilter()  }}"
-                       data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                <ul class="dropdown-menu">
-                    @forelse($gaFilterValues as $scope)
-                        <li>
-                            <label class="dropdown-item"
-                                   wire:click="$set('selectedGaFilter', '{{ ucfirst($scope) }}')">
-                                {{ __(ucfirst($scope)) }}
-                            </label>
-                        </li>
-                    @empty
-                    @endforelse
-                </ul>
+        <div class="mb-3 mb-sm-0 w-sm-auto flex-sm-shrink-1 flex-fill form-floating">
+
+            <div class="input-group flex-nowrap">
+                @foreach($gaFilterValues as $scope)
+                    <button class="btn flex-fill shadow-none {{ $selectedGaFilter === $scope ? 'btn-secondary' : 'btn-outline-secondary' }}"
+                            type="button" wire:click="$set('selectedGaFilter', '{{ $scope }}')">
+                    <span class="d-md-block d-none">
+                        {{ __(ucfirst($scope)) }}
+                    </span>
+                        <span class="d-block d-md-none">
+                        {{ __(ucfirst($scope)) }}
+                    </span>
+                    </button>
+                @endforeach
             </div>
+
         </div>
     </div>
     <div class="flex-grow-1 mb-3">

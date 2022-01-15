@@ -2,65 +2,25 @@
 
 namespace App\Http\Livewire;
 
-use App\Actions\Data\ElsieSearchAction;
-use App\Models\Product;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Route;
+use App\Models\ElsieCredentials;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class ElsieSearch extends Component
 {
-    use WithPagination;
+    public ElsieCredentials $elsieCredentials;
 
-    public string $search = '';
-    public string $sort = 'Name';
-    public array $sorts = ['Name', 'Newest', 'Oldest'];
-    public string $filter = 'All';
-    public array $filters = ['All', 'Custom'];
+    public string $codeSearch;
+    public string $nameSearch;
 
-    protected $listeners = ['$refresh'];
-
-    public function route(): \Illuminate\Routing\Route
+    public function mount(ElsieCredentials $elsieCredentials = null, string $codeSearch = '', string $nameSearch = '')
     {
-        return Route::get('/search', static::class)
-            ->name('search')
-            ->middleware('auth');
+        $this->elsieCredentials = $elsieCredentials ?? auth()->user()->elsie_credentials()->first();
+        $this->codeSearch = $codeSearch ?? request()->query('code', '');
+        $this->nameSearch = $nameSearch ?? request()->query('name', '');
     }
 
     public function render()
     {
-        return view('elsie-search')->with([
-            'products' => $this->query()->paginate(),
-        ]);
-    }
-
-    public function query(): Builder
-    {
-        optional(ElsieSearchAction::make()->handle($this->search) ?? null, function (array $items) {
-            collect($items)->filter(function ($item) {
-                return !empty($item);
-            })->each(function (array $item) {
-                optional($item[2] ?? null, function (string $name) use ($item) {
-                    optional(Product::query()->firstOrCreate([
-                            'elsie_code' => $item[0] ?? null,
-                            'stock_code' => $item[1] ?? null,
-                            'width' => $item[6] ?? null,
-                            'height' => $item[7] ?? null,
-//                            'name' => $name . ' ' . $item[8] ?? '',
-                        ]) ?? null, function (Product $product) {
-                        dd($product->suggestedManufacturer());
-                    });
-                });
-            });
-        });
-
-        return Product::query()->when(!empty($this->search), function (Builder $builder) {
-            return $builder->where('name', 'like', "%" . $this->search . "%");
-        });
+        return view('elsie-search');
     }
 }
-

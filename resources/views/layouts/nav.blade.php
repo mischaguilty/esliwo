@@ -19,6 +19,8 @@
                     @endif
                 @else
                     {{--                    <a href="{{ route('home') }}" class="nav-link">{{ __('Home') }}</a>--}}
+
+                @if(auth()->id() === 1)
                     @if(Route::has('users'))
                         <a href="{{ route('users') }}" class="nav-link">{{ __('Users') }}</a>
                     @endif
@@ -33,6 +35,11 @@
                     @endif
                     @if(Route::has('products'))
                         <a href="{{ route('products') }}" class="nav-link">{{ __('Products') }}</a>
+                        @endif
+                    @else
+                        @if(Route::has('defaults'))
+                            <a href="{{ route('defaults') }}" class="nav-link">{{ __('Defaults') }}</a>
+                        @endif
                     @endif
 
                     <div class="nav-item dropdown">

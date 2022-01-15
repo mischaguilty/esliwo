@@ -3,12 +3,12 @@
 namespace App\Jobs;
 
 use App\Actions\Data\StockProductInfoAction;
-use App\Events\ProductQuantityUpdated;
 use App\Models\StockProduct;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -18,6 +18,12 @@ class GetStockProductInfoJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private StockProduct $stockProduct;
+
+
+    public function middleware(): array
+    {
+        return [(new WithoutOverlapping($this->stockProduct->id))];
+    }
 
     public function getStockProduct(): StockProduct
     {

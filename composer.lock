@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e4c657a05ef28f6cc0375fe7f1f05eab",
+    "content-hash": "db1251d4d1e1d1c1b9cd40808dd3cd82",
     "packages": [
         {
             "name": "asantibanez/livewire-charts",
@@ -269,6 +269,106 @@
                 "source": "https://github.com/barryvdh/ReflectionDocBlock/tree/v2.0.6"
             },
             "time": "2018-12-13T10:34:14+00:00"
+        },
+        {
+            "name": "bastinald/laravel-livewire-loader",
+            "version": "2.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bastinald/laravel-livewire-loader.git",
+                "reference": "b9ed3cecfb0c60a4d79f8aac7b4b379fe5e43e16"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bastinald/laravel-livewire-loader/zipball/b9ed3cecfb0c60a4d79f8aac7b4b379fe5e43e16",
+                "reference": "b9ed3cecfb0c60a4d79f8aac7b4b379fe5e43e16",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^8.0",
+                "livewire/livewire": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Bastinald\\LaravelLivewireLoader\\Providers\\LaravelLivewireLoaderProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bastinald\\LaravelLivewireLoader\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Dion",
+                    "email": "bastinald@icloud.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel Livewire global loading spinner.",
+            "homepage": "https://github.com/bastinald/laravel-livewire-loader",
+            "support": {
+                "issues": "https://github.com/bastinald/laravel-livewire-loader/issues",
+                "source": "https://github.com/bastinald/laravel-livewire-loader/tree/2.2.2"
+            },
+            "time": "2021-08-22T18:04:46+00:00"
+        },
+        {
+            "name": "bastinald/laravel-livewire-toasts",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bastinald/laravel-livewire-toasts.git",
+                "reference": "dfba27a2b7eb8256783d30299d30824b8d19c152"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bastinald/laravel-livewire-toasts/zipball/dfba27a2b7eb8256783d30299d30824b8d19c152",
+                "reference": "dfba27a2b7eb8256783d30299d30824b8d19c152",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^8.0",
+                "livewire/livewire": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Bastinald\\LaravelLivewireToasts\\Providers\\LaravelLivewireToastsProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bastinald\\LaravelLivewireToasts\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Dion",
+                    "email": "bastinald@icloud.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Dynamic Laravel Livewire Bootstrap toasts.",
+            "homepage": "https://github.com/bastinald/laravel-livewire-toasts",
+            "support": {
+                "issues": "https://github.com/bastinald/laravel-livewire-toasts/issues",
+                "source": "https://github.com/bastinald/laravel-livewire-toasts/tree/3.0.0"
+            },
+            "time": "2021-09-10T00:18:49+00:00"
         },
         {
             "name": "bastinald/ui",
@@ -12192,5 +12292,5 @@
         "ext-curl": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.2.0"
 }
