@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Actions\Data\StockProductInfoAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +14,7 @@ use Kirschbaum\PowerJoins\PowerJoins;
 use MVanDuijker\TransactionalModelEvents\TransactionalAwareEvents;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 class Product extends Model implements HasMedia
 {
@@ -20,6 +22,7 @@ class Product extends Model implements HasMedia
     use InteractsWithMedia;
     use PowerJoins;
     use TransactionalAwareEvents;
+    use HasRelationships;
 
     protected $table = 'products';
 
@@ -35,16 +38,17 @@ class Product extends Model implements HasMedia
         'note',
     ];
 
-    public static function boot()
+    public static function booted()
     {
-        parent::boot();
+        static::created(function (Product $product) {
+            $product->stock_products()->createMany(Stock::all()->pluck('id')->map(function (int $id) {
+                return [
+                    'stock_id' => $id,
+                ];
+            })->toArray());
 
-        static::registerModelEvent('afterCommit.created', function (Product $product) {
-            Stock::all()->each(function (Stock $stock) use ($product) {
-                StockProduct::query()->firstOrCreate([
-                    'stock_id' => $stock->id,
-                    'product_id' => $product->id,
-                ]);
+            $product->stock_products()->get()->each(function (StockProduct $stockProduct) {
+                StockProductInfoAction::run($stockProduct);
             });
         });
     }
@@ -107,18 +111,18 @@ class Product extends Model implements HasMedia
         return $this->hasMany(StockProduct::class, 'product_id', 'id');
     }
 
-    public function prices(): HasManyThrough
+    public function latestPrice()
     {
-        return $this->hasManyThrough(StockProductPrice::class, StockProduct::class, 'product_id', 'stock_product_id', 'id', 'id');
+        return $this->hasOneThrough(StockProductPrice::class, StockProduct::class, 'product_id', 'stock_product_id', 'id', 'id')->latest('stock_product_prices.created_at');
     }
 
     public function quantities(): HasManyThrough
     {
-        return $this->hasManyThrough(StockProductQuantity::class, StockProduct::class, 'product_id', 'stock_product_id', 'id', 'id');
-    }
-
-    public function pricesForStock(Stock $stock)
-    {
-//        return $this->prices()
+        return $this->hasManyDeep(
+            StockProductQuantity::class,
+            [StockProduct::class, Stock::class],
+            ['product_id', 'id', 'stock_product_id'],
+            ['id', 'id', 'id']
+        );
     }
 }

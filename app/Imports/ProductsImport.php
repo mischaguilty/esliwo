@@ -34,7 +34,7 @@ class ProductsImport implements WithHeadingRow, WithUpserts, WithStartRow, Skips
         return 'elsie_code';
     }
 
-    public function model(array $row): ?Product
+    public function model(array $row)
     {
         if (is_null($row['kod_skladskoi']) && is_null($row['naimenovanie']) && is_null($row['razmer']) && is_string($row['kod_elsi'])) {
             return null;
@@ -46,7 +46,7 @@ class ProductsImport implements WithHeadingRow, WithUpserts, WithStartRow, Skips
             }
 
             $parsed = Product::parseCode($row['kod_elsi']);
-            return new Product([
+            return Product::query()->create([
                 'elsie_code' => $row['kod_elsi'],
                 'name' => $row['naimenovanie'],
                 'size' => $row['razmer'],

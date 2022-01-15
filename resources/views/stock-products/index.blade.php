@@ -16,7 +16,7 @@
             </li>
 
             <li class="breadcrumb-item active">
-                <a href="{{ route('stock-products') }}" class="text-decoration-none text-black">
+                <a href="{{ route('stock-products', ['stock' => $stock]) }}" class="text-decoration-none text-black">
                     {{ __('Products') }}
                 </a>
             </li>
@@ -37,10 +37,12 @@
     <div class="list-group mb-3">
         @forelse($sProducts as $sProduct)
             <div class="list-group-item list-group-item-action">
-                <div class="row align-items-center">
-                    <div class="col-lg mb-2 mb-lg-0">
+                <div class="d-inline-flex align-items-center justify-content-between w-100">
+                    <div class="flex-grow-0 mb-2 mb-lg-0">
+                        <a href="{{ route('stock-products.show', ['stockProduct' => $sProduct]) }}"
+                           class="text-decoration-none text-dark">
                         <ul class="list-unstyled mb-0">
-                            <li>
+                            <li >
                                 <strong>{{ $sProduct->product->elsie_code }}</strong> - {{ $sProduct->product->name }}
                             </li>
                             <li>
@@ -57,29 +59,39 @@
                                 </li>
                             @endif
                         </ul>
+                        </a>
                     </div>
-                    <div class="col-lg-auto text-center">
-                        @if($price = $sProduct->actual_price)
-                            <div>
-                                <strong class="text-success">
-                                    {{ $price->price }}
-                                </strong>
-                                <span>{{ __('UAH') }}</span>
-                            </div>
-                            <div>
-                                <small>
-                                    {{ now()->sub($price->created_at)->diffForHumans() }}
-                                </small>
+                    <div class="d-inline-flex flex-shrink-1 text-center">
+                        @if($quantity = $sProduct->actual_quantity)
+                            <div class="d-block px-2">
+                                <div>
+                                    <strong class="text-primary">
+                                        {{ $quantity->quantity}}
+                                    </strong>
+                                    <span>{{ __($quantity->units) }}</span>
+                                </div>
+                                <div>
+                                    <small class="text-secondary">
+                                        {{ now()->sub($quantity->created_at)->diffForHumans() }}
+                                    </small>
+                                </div>
                             </div>
                         @endif
-                        {{--                                            <x-ui::action icon="eye" :title="__('Read')"--}}
-                        {{--                                                          click="$emit('showModal', 'vehicles.read', {{ $vehicle->id }})"/>--}}
-                        {{----}}
-                        {{--                                            <x-ui::action icon="pencil-alt" :title="__('Update')"--}}
-                        {{--                                                          click="$emit('showModal', 'vehicles.save', {{ $vehicle->id }})"/>--}}
-                        {{----}}
-                        {{--                                            <x-ui::action icon="trash-alt" :title="__('Delete')" click="delete({{ $vehicle->id }})"--}}
-                        {{--                                                          onclick="confirm('{{ __('Are you sure?') }}') || event.stopImmediatePropagation()"/>--}}
+                        @if($price = $sProduct->actual_price)
+                            <div class="d-block">
+                                <div>
+                                    <strong class="text-success">
+                                        {{ $price->price }}
+                                    </strong>
+                                    <span>{{ __($price->currency) }}</span>
+                                </div>
+                                <div>
+                                    <small class="text-secondary">
+                                        {{ now()->sub($price->created_at)->diffForHumans() }}
+                                    </small>
+                                    </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

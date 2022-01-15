@@ -27,7 +27,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Product::observe(ProductsObserver::class);
         View::share('serviceState', ElsieServiceStateAction::make()->handle());
     }
 }

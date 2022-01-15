@@ -27,7 +27,7 @@
 
     <div class="list-group mb-3">
         @forelse($stockProducts as $stockProduct)
-            <livewire:products.item :product="$stockProduct->product"
+            <livewire:stock-products.item :stockProduct="$stockProduct"
                                     wire:key="{{ implode('_', ['product', $loop->index, $stockProduct->product->id]) }}"
             />
         @empty

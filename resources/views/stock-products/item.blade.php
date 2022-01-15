@@ -1,4 +1,4 @@
-<div name="stockProduct_{{ $stockProduct->id }}">
+<div>
     <div class="d-inline-flex p-3 w-100 justify-content-between align-items-center">
         <div class="flex-grow-1">
             <a href="{{ route('stock-products.show', ['stockProduct' => $stockProduct]) }}"
@@ -35,11 +35,3 @@
         </div>
     </div>
 </div>
-
-@push('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            window.livewire.emit('$getStockProductInfo');
-        });
-    </script>
-@endpush

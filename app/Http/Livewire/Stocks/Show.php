@@ -24,6 +24,12 @@ class Show extends Component
             ->middleware('auth');
     }
 
+    public function updatedSearch()
+    {
+        $this->resetPage();
+        $this->emit('$refresh');
+    }
+
     public function render()
     {
         return view('stocks.show')->with([

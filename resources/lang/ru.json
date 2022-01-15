@@ -197,7 +197,7 @@
   "Products": "Товары",
   "Search Products": "Найти товары",
   "products": "товары",
-  "products in stock": "товаров на складе",
+  "products in stock": "наименований на складе",
   "Placement ": "Все",
   "Placement A": "Ветровое",
   "Placement B": "Заднее",
@@ -222,5 +222,8 @@
   "or": "или",
   "register": "пройдите регистрацию",
   "Update Profile": "Редактировать профиль",
-  "Change Password": "Изменить пароль"
+  "Change Password": "Изменить пароль",
+    "Settings": "Настройки",
+    "Is logged in": "Вход выполнен",
+    "Services State": "Доступность сервиса"
 }

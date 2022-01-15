@@ -22,7 +22,12 @@ class GetStockProductInfoJob implements ShouldQueue
 
     public function middleware(): array
     {
-        return [(new WithoutOverlapping($this->stockProduct->id))];
+        return [(new WithoutOverlapping($this->getStockProductId()))];
+    }
+
+    public function getStockProductId()
+    {
+        return $this->stockProduct->exists ?: $this->stockProduct->id;
     }
 
     public function getStockProduct(): StockProduct
@@ -46,10 +51,9 @@ class GetStockProductInfoJob implements ShouldQueue
      * @return void
      * @throws Throwable
      */
-    public function handle(StockProductInfoAction $action)
+    public function handle(StockProduct $stockProduct)
     {
-        DB::transaction(function () use ($action) {
-            $action->handle($this->stockProduct);
-        });
+        $this->stockProduct = $stockProduct->exists ? $stockProduct : $this->stockProduct;
+        StockProductInfoAction::run($this->getStockProduct());
     }
 }

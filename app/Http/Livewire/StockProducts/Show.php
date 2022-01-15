@@ -2,15 +2,13 @@
 
 namespace App\Http\Livewire\StockProducts;
 
+use App\Actions\Data\StockProductInfoAction;
 use App\Jobs\GetStockProductInfoJob;
 use App\Models\StockProduct;
 use App\Models\StockProductPrice;
 use App\Models\StockProductQuantity;
 use Asantibanez\LivewireCharts\Facades\LivewireCharts;
 use Asantibanez\LivewireCharts\Models\AreaChartModel;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 
@@ -22,6 +20,11 @@ class Show extends Component
         'onQuantitiesPointClick' => 'handleQuantityOnPointClick',
         'onPricesPointClick' => 'handlePriceOnPointClick',
     ];
+
+    public function mount(StockProduct $stockProduct)
+    {
+        $this->stockProduct = $stockProduct->exists ? $stockProduct : null;
+    }
 
     public function route()
     {
@@ -42,6 +45,8 @@ class Show extends Component
 
     public function render()
     {
+        $this->getStockProductInfo();
+
         return view('stock-products.show')->with([
             'pricesChartModel' => optional(
                     $this->stockProduct->has('prices')
@@ -113,7 +118,7 @@ class Show extends Component
 
     public function getStockProductInfo()
     {
-        dispatch(new GetStockProductInfoJob($this->stockProduct->withoutRelations()))->onQueue('default')->afterResponse();
+        GetStockProductInfoJob::dispatchSync($this->stockProduct);
         $this->emit('$refresh');
     }
 }

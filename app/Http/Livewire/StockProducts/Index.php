@@ -31,6 +31,12 @@ class Index extends Component
         $this->search = '';
     }
 
+    public function updatedSearch()
+    {
+        $this->resetPage();
+        $this->emit('$refresh');
+    }
+
     public function query(): Builder
     {
         return StockProduct::query()->when($this->selectedStocks->count() !== 0, function (Builder $builder) {
@@ -39,6 +45,10 @@ class Index extends Component
             return $builder->whereHas('product', function (Builder $builder) {
                 return $builder->where('elsie_code', 'like', $this->search . '%');
             });
+        })->whereHas('prices', function (Builder $builder) {
+            $builder->where('price', '<>', 0);
+        })->whereHas('quantities', function (Builder $builder) {
+            $builder->where('quantity', '<>', 0);
         });
     }
 

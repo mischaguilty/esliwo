@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Kirschbaum\PowerJoins\PowerJoins;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 class StockProduct extends Pivot
 {
     use HasFactory;
     use PowerJoins;
+    use HasRelationships;
 
     protected $table = 'stock_products';
 
@@ -20,6 +22,11 @@ class StockProduct extends Pivot
     protected $fillable = [
         'stock_id',
         'product_id',
+    ];
+
+    protected $withCount = [
+        'quantities',
+        'prices',
     ];
 
     public static function findByTrashCode(string $trashCode): ?StockProduct
@@ -86,18 +93,15 @@ class StockProduct extends Pivot
         });
     }
 
-    public function quantities(): HasMany
+    public function quantities()
     {
-        return $this->hasMany(StockProductQuantity::class, 'stock_product_id', 'id');
+        return $this->hasMany(StockProductQuantity::class, 'stock_product_id', 'id')->orderBy('created_at');
     }
 
-    public function getActualQuantityAttribute(): ?StockProductQuantity
+    public function getActualQuantityAttribute()
     {
-        return optional($this->quantities()->latest()->first() ?? null, function (StockProductQuantity $quantity) {
-            return $quantity;
-        });
+        return $this->quantities()->latest()->first();
     }
-
     public function resolveRouteBinding($value, $field = null)
     {
         return self::query()->find($value);

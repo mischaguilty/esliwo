@@ -3,12 +3,16 @@
 namespace App\Actions\Data;
 
 use App\Actions\CookieAction;
-use App\Models\ElsieCookie;
 use Illuminate\Support\Facades\Http;
+use Lorisleiva\Actions\Concerns\AsAction;
+use Lorisleiva\Actions\Concerns\AsJob;
 use function optional;
 
 class ElsieShowTrashAction extends CookieAction
 {
+    use AsAction;
+    use AsJob;
+
     protected string $url = 'http://elsie.ua/rus/shop/showtrash';
 
     public function handle(): ?array
@@ -20,7 +24,7 @@ class ElsieShowTrashAction extends CookieAction
                 'Accept-Language' => 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7,uk;q=0.6',
                 'Cache-Control' => 'no-cache',
                 'Connection' => 'keep-alive',
-                'Cookie' => $this->credentials->header_value,
+                'Cookie' => 'mojolicious=eyJkZWxpdmVyeV9hZGRyZXNzIjoiICIsImRlbGl2ZXJ5X2lzbmVlZGVkIjowLCJkZWxpdmVyeV9waG9uZSI6IigwNjEpIDc4Ny02NS03NiwgKDA1MCkgMzQyLTg0LTg5IiwiY29tbWVudCI6IiIsIm5hbWUiOiJhdnRvc3Rla2xvenBAaS51YSIsImV4cGlyZXMiOjE2NDMxMzI4NTl9--440bbb6271fa2a0dbc8aaa33b560e8ac',
                 'Host' => 'elsie.ua',
                 'Origin' => 'http://elsie.ua',
                 'Pragma' => 'no-cache',
@@ -30,5 +34,10 @@ class ElsieShowTrashAction extends CookieAction
             ])->post($this->url)->json() ?? [], function (array $data) {
             return $data;
         });
+    }
+
+    public function asJob()
+    {
+        return $this->handle();
     }
 }

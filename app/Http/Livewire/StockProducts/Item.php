@@ -34,7 +34,7 @@ class Item extends Component
 
     public function getStockProductInfo()
     {
-        GetStockProductInfoJob::dispatchAfterResponse($this->stockProduct->withoutRelations());
+        GetStockProductInfoJob::dispatch($this->stockProduct)->afterCommit();
         $actualQuantity = optional($this->stockProduct->getActualQuantityAttribute() ?? null, function (StockProductQuantity $stockProductQuantity) {
                 return $stockProductQuantity;
             }) ?? new StockProductQuantity([

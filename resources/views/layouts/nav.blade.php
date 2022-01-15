@@ -2,10 +2,19 @@
     <div class="container">
         <a href="{{ route('welcome') }}" class="navbar-brand">
             <img src="{{ url('images/elsie_logo.png') }}" height="24" alt="{{ config('app.name') }}'s Logo"/>
+            <span class="" title="{{ __('Services State') }}">
+                <i class="fa fa-circle {{ $serviceState ? 'text-success' : 'text-danger' }}"></i>
+            </span>
+
+            @auth
+            <span class="" title="{{ __('Is logged in') }}">
+                <i class="fa fa-circle {{ $isLoggedIn ? 'text-success' : 'text-danger' }}"></i>
+            </span>
+            @endauth
         </a>
 
-        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
-            <span class="navbar-toggler-icon"></span>
+        <button type="button" class="navbar-toggler shadow-none" data-bs-toggle="collapse" data-bs-target="#nav">
+            <span class="navbar-toggler-icon shadow-none"></span>
         </button>
 
         <div id="nav" class="collapse navbar-collapse">
@@ -18,37 +27,23 @@
                         <a href="{{ route('register') }}" class="nav-link">{{ __('Register') }}</a>
                     @endif
                 @else
-                    {{--                    <a href="{{ route('home') }}" class="nav-link">{{ __('Home') }}</a>--}}
+                    <div class="nav-item dropdown">
+                        <span class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            {{ __('Settings') }}
+                        </span>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+                            @forelse($menuitems as $menuitem)
+                                <a class="dropdown-item" href="{{ route($menuitem) }}">
+                                    {{ __(ucfirst($menuitem)) }}
+                                </a>
+                            @empty
+                            @endforelse
+                        </div>
+                    </div>
 
-                @if(auth()->id() === 1)
-                    @if(Route::has('users'))
-                        <a href="{{ route('users') }}" class="nav-link">{{ __('Users') }}</a>
-                    @endif
-                    @if(Route::has('stocks'))
-                        <a href="{{ route('stocks') }}" class="nav-link">{{ __('Stocks') }}</a>
-                    @endif
-                    @if(Route::has('manufacturers'))
-                        <a href="{{ route('manufacturers') }}" class="nav-link">{{ __('Manufacturers') }}</a>
-                    @endif
-                    @if(Route::has('vehicles'))
-                        <a href="{{ route('vehicles') }}" class="nav-link">{{ __('Vehicles') }}</a>
-                    @endif
-                    @if(Route::has('products'))
-                        <a href="{{ route('products') }}" class="nav-link">{{ __('Products') }}</a>
-                        @endif
-                    @else
-                        @if(Route::has('defaults'))
-                            <a href="{{ route('defaults') }}" class="nav-link">{{ __('Defaults') }}</a>
-                        @endif
-                    @endif
 
                     <div class="nav-item dropdown">
                         <span class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <a href="{{ 'http://elsie.ua' }}"
-                               class="text-decoration-none {{ $serviceState ? 'text-success' : 'text-danger'}}"
-                               title="{{ __('Service availability') }}" data-bs-toggle="tooltip">
-                                <i class="fa fa-circle"></i>
-                            </a>
                             {{ Auth::user()->name }}
                         </span>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-dark">

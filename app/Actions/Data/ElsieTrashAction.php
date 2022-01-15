@@ -3,11 +3,13 @@
 namespace App\Actions\Data;
 
 use App\Actions\CookieAction;
+use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsJob;
 
 class ElsieTrashAction extends CookieAction
 {
     use AsJob;
+    use AsAction;
 
     protected string $url = 'http://elsie.ua/rus/shop/trash.html';
     protected int $shop = 1;
@@ -19,6 +21,11 @@ class ElsieTrashAction extends CookieAction
     {
         $this->setCredentials();
         return $this->getResponse($codes, $filled);
+    }
+
+    public function asJob(array $codes, bool $filled = false)
+    {
+        return $this->handle($codes, $filled);
     }
 
     protected function getPostFields(array $codes, bool $filled): string
@@ -60,7 +67,7 @@ class ElsieTrashAction extends CookieAction
                 'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7,uk;q=0.6',
                 implode(': ', [
                     'Cookie',
-                    $this->credentials->header_value,
+                    'mojolicious=eyJkZWxpdmVyeV9hZGRyZXNzIjoiICIsImRlbGl2ZXJ5X2lzbmVlZGVkIjowLCJkZWxpdmVyeV9waG9uZSI6IigwNjEpIDc4Ny02NS03NiwgKDA1MCkgMzQyLTg0LTg5IiwiY29tbWVudCI6IiIsIm5hbWUiOiJhdnRvc3Rla2xvenBAaS51YSIsImV4cGlyZXMiOjE2NDMxMzI4NTl9--440bbb6271fa2a0dbc8aaa33b560e8ac',
                 ]),
             ],
         ]);
