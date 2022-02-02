@@ -6,20 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class StockProductPrice extends Model
+class Price extends Model
 {
     use HasFactory;
 
-    protected $table = 'stock_product_prices';
+    protected $table = 'prices';
 
     protected $fillable = [
-        'stock_product_id',
+        'product_id',
         'price',
         'currency',
     ];
 
-    public function stock_product(): BelongsTo
+    public function product(): BelongsTo
     {
-        return $this->belongsTo(StockProduct::class, 'stock_product_id', 'id');
+        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 }

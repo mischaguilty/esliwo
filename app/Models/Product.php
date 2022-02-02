@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Actions\Data\StockProductInfoAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -47,9 +46,9 @@ class Product extends Model implements HasMedia
                 ];
             })->toArray());
 
-            $product->stock_products()->get()->each(function (StockProduct $stockProduct) {
-                StockProductInfoAction::run($stockProduct);
-            });
+//            $product->stock_products()->get()->each(function (StockProduct $stockProduct) {
+//                StockProductInfoAction::run($stockProduct);
+//            });
         });
     }
 
@@ -111,11 +110,6 @@ class Product extends Model implements HasMedia
         return $this->hasMany(StockProduct::class, 'product_id', 'id');
     }
 
-    public function latestPrice()
-    {
-        return $this->hasOneThrough(StockProductPrice::class, StockProduct::class, 'product_id', 'stock_product_id', 'id', 'id')->latest('stock_product_prices.created_at');
-    }
-
     public function quantities(): HasManyThrough
     {
         return $this->hasManyDeep(
@@ -124,5 +118,15 @@ class Product extends Model implements HasMedia
             ['product_id', 'id', 'stock_product_id'],
             ['id', 'id', 'id']
         );
+    }
+
+    public function prices()
+    {
+        return $this->hasMany(Price::class, 'priduct_id', 'id');
+    }
+
+    public function actual_price()
+    {
+        return $this->prices()->latest()->first();
     }
 }
