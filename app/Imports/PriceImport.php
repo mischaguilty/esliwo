@@ -15,7 +15,7 @@ class PriceImport implements WithMultipleSheets, SkipsUnknownSheets
         return [
             'Производители' => (new ManufacturersImport),
             'Модели автомобилей' => (new VehiclesImport),
-            'Автостёкла и аксессуары' => (new ProductsImport),
+//            'Автостёкла и аксессуары' => (new ProductsImport),
         ];
     }
 

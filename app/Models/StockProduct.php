@@ -81,18 +81,6 @@ class StockProduct extends Pivot
         return $this->belongsTo(Stock::class, 'stock_id', 'id');
     }
 
-    public function prices(): HasMany
-    {
-        return $this->hasMany(StockProductPrice::class, 'stock_product_id', 'id');
-    }
-
-    public function getActualPriceAttribute(): ?StockProductPrice
-    {
-        return optional($this->prices()->latest()->first() ?? null, function (StockProductPrice $price) {
-            return $price;
-        });
-    }
-
     public function quantities()
     {
         return $this->hasMany(StockProductQuantity::class, 'stock_product_id', 'id')->orderBy('created_at');
@@ -101,9 +89,5 @@ class StockProduct extends Pivot
     public function getActualQuantityAttribute()
     {
         return $this->quantities()->latest()->first();
-    }
-    public function resolveRouteBinding($value, $field = null)
-    {
-        return self::query()->find($value);
     }
 }
